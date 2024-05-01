@@ -36,35 +36,39 @@ const AccountManagement = () => {
         </Card.Text>
         <hr />
         <Card.Body>
-          <Table variant="light" striped bordered hover>
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teachers.map((teacher) => (
-                <tr key={teacher._id}>
-                  <td>{teacher.first_name}</td>
-                  <td>{teacher.last_name}</td>
-                  <td>{teacher.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <Button
-            style={{
-              backgroundColor: "#6A62FA",
-              borderColor: "#6A62FA",
-              borderRadius: "30px",
-              width: "100%",
-            }}
-            onClick={handleShowModal}
-          >
-            Add Teacher Account
-          </Button>
+          <Card>
+            <Card.Body>
+              <Table variant="light" striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {teachers.map((teacher) => (
+                    <tr key={teacher._id}>
+                      <td>{teacher.first_name}</td>
+                      <td>{teacher.last_name}</td>
+                      <td>{teacher.email}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <Button
+                style={{
+                  backgroundColor: "#6A62FA",
+                  borderColor: "#6A62FA",
+                  borderRadius: "30px",
+                  width: "100%",
+                }}
+                onClick={handleShowModal}
+              >
+                Add Teacher Account
+              </Button>
+            </Card.Body>
+          </Card>
         </Card.Body>
       </Card>
 

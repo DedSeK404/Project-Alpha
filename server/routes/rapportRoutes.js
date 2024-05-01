@@ -33,7 +33,7 @@ router.get("/", getAllReports);
  * @description download report
  * @access Protected (only accessible to authenticated users)
  */
-router.get("/:id/download", downloadReport);
+router.get("/:id/download/uploads/:filename", downloadReport);
 
 /**
  * @method PUT /rapport/:id

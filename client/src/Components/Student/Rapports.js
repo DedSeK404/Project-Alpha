@@ -119,24 +119,36 @@ const Rapports = () => {
                 </Accordion.Item>
               </Accordion>
               <Card.Body>
-                <input
-                  type="file"
-                  className="form-control"
-                  multiple
-                  onChange={handleFileChange}
-                />
-                <Button
-                  style={{
-                    backgroundColor: "#6A62FA",
-                    borderColor: "#6A62FA",
-                    borderRadius: "30px",
-                    marginTop: "20px",
-                    width: "100%",
-                  }}
-                  onClick={() => handleSubmit(application)}
-                >
-                  Upload Files
-                </Button>
+                {allRapports.find(
+                  (report) => report.application._id === application._id
+                )?.rapport_status === "approved" ? (
+                  <Card bg="success" text="white">
+                    <Card.Header as={"h3"}>
+                    This report has been approved by your teacher.
+                    </Card.Header>
+                  </Card>
+                ) : (
+                  <>
+                    <input
+                      type="file"
+                      className="form-control"
+                      multiple
+                      onChange={handleFileChange}
+                    />
+                    <Button
+                      style={{
+                        backgroundColor: "#6A62FA",
+                        borderColor: "#6A62FA",
+                        borderRadius: "30px",
+                        marginTop: "20px",
+                        width: "100%",
+                      }}
+                      onClick={() => handleSubmit(application)}
+                    >
+                      Upload Files
+                    </Button>
+                  </>
+                )}
               </Card.Body>
             </Card>
           </div>

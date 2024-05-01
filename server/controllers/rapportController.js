@@ -62,7 +62,8 @@ module.exports.createReport = async (req, res) => {
 
 module.exports.downloadReport = async (req, res) => {
   try {
-    const report = await rapportModel.findById(req.params.id);
+    const { id, filename } = req.params;
+    const report = await rapportModel.findById(id);
     if (!report) {
       return res.status(404).json({ msg: "Report not found" });
     }
@@ -72,47 +73,27 @@ module.exports.downloadReport = async (req, res) => {
       return res.status(404).json({ msg: "No files found for the report" });
     }
 
-    // Generate download links for each file
-    const downloadLinks = report.files.map((file) => ({
-      filename: path.basename(file),
-      link: `${req.protocol}://${req.get("host")}/rapport/${
-        req.params.id
-      }/download/${path.basename(file)}`,
-    }));
-
-    res.json({ downloadLinks });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-};
-
-// Function to handle file download
-module.exports.downloadFile = async (req, res) => {
-  try {
-    const report = await rapportModel.findById(req.params.id);
-    if (!report) {
-      return res.status(404).json({ msg: "Report not found" });
-    }
-
-    // Check if the file exists in the report
-    const file = report.files.find(
-      (file) => path.basename(file) === req.params.filename
-    );
-    if (!file) {
+    // Find the file matching the provided filename
+    const requestedFile = report.files.find(file => path.basename(file) === filename);
+    if (!requestedFile) {
       return res.status(404).json({ msg: "File not found" });
     }
 
-    // Set the file path
-    const filePath = path.join(__dirname, "..", file);
+    // Construct the file path
+    const filePath = path.join(__dirname, "..", requestedFile);
 
     // Check if the file exists
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({ msg: "File not found" });
     }
 
-    // Send the file as a download
-    res.download(filePath);
+    // Set appropriate headers for the file download
+    res.setHeader('Content-Disposition', `attachment; filename="${path.basename(filePath)}"`);
+    res.setHeader('Content-Type', 'application/octet-stream');
+
+    // Stream the file to the response
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");

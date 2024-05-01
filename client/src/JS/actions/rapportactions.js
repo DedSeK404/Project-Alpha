@@ -43,6 +43,7 @@ export const createReport = (newReportData) => async (dispatch) => {
 
     alert(`${res.data.msg}`);
     dispatch({ type: CREATEREPORTSUCCESS });
+    dispatch(getAllReports());
   } catch (error) {
     dispatch({ type: RAPPORTFAILED, payload: error });
     console.log(error);
@@ -57,6 +58,7 @@ export const createReport = (newReportData) => async (dispatch) => {
 
 export const downloadReport = (reportId, filename) => async (dispatch) => {
   try {
+
     const res = await axios.get(`${baseURL}${reportId}/download/${filename}`, {
       responseType: "blob",
     });
@@ -69,10 +71,13 @@ export const downloadReport = (reportId, filename) => async (dispatch) => {
     document.body.appendChild(link);
     link.click();
 
+    // Clean-up
     document.body.removeChild(link);
 
+    // Dispatch success action
     dispatch({ type: DOWNLOAD_REPORT_SUCCESS });
   } catch (error) {
+    // Dispatch failure action with error payload
     dispatch({ type: DOWNLOAD_REPORT_FAILED, payload: error });
     console.error("Error downloading report:", error);
   }

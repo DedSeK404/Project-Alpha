@@ -39,46 +39,54 @@ const SoutenanceAdmin = () => {
       </Card.Text>
       <hr />
       <Card.Body>
-        <Table variant="light" striped bordered hover>
-          <thead>
-            <tr>
-              <th>Company Name</th>
-              <th>Student</th>
-              <th>Teacher</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Rapport Status</th>
-              <th>Date Soutenance</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rapportsWithDateSoutenance.map((report) => (
-              <tr key={report._id}>
-                <td>{report.application.companyName}</td>
-                <td>
-                  {report.application.first_name} {report.application.last_name}
-                </td>
-                <td>
-                  {report.application.teacher_first_name}{" "}
-                  {report.application.teacher_last_name}
-                </td>
-                <td>
-                  <FaRegCalendarAlt />{" "}
-                  {moment(report.application.startDate).format("YYYY-MM-DD")}
-                </td>
-                <td>
-                  <FaRegCalendarAlt />{" "}
-                  {moment(report.application.endDate).format("YYYY-MM-DD")}
-                </td>
-                <td style={{ color: "green" }}>{report.rapport_status}</td>
-                <td>
-                  <FaRegCalendarAlt />{" "}
-                  {moment(report.date_soutenance).format("YYYY-MM-DD")}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <Card>
+          <Card.Body>
+            {" "}
+            <Table variant="light" striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Company Name</th>
+                  <th>Student</th>
+                  <th>Teacher</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Rapport Status</th>
+                  <th>Date Soutenance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rapportsWithDateSoutenance.map((report) => (
+                  <tr key={report._id}>
+                    <td>{report.application.companyName}</td>
+                    <td>
+                      {report.application.first_name}{" "}
+                      {report.application.last_name}
+                    </td>
+                    <td>
+                      {report.application.teacher_first_name}{" "}
+                      {report.application.teacher_last_name}
+                    </td>
+                    <td>
+                      <FaRegCalendarAlt />{" "}
+                      {moment(report.application.startDate).format(
+                        "YYYY-MM-DD"
+                      )}
+                    </td>
+                    <td>
+                      <FaRegCalendarAlt />{" "}
+                      {moment(report.application.endDate).format("YYYY-MM-DD")}
+                    </td>
+                    <td style={{ color: "green" }}>{report.rapport_status}</td>
+                    <td>
+                      <FaRegCalendarAlt />{" "}
+                      {moment(report.date_soutenance).format("YYYY-MM-DD")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card.Body>
+        </Card>
       </Card.Body>
     </Card>
   );

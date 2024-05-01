@@ -40,7 +40,7 @@ const SoutenanceTeacher = () => {
       </Card.Text>
       <hr />
       <Card.Body>
-        <Table variant="light" striped bordered hover>
+      <Card><Card.Body><Table variant="light" striped bordered hover>
           <thead>
             <tr>
               <th>Company Name</th>
@@ -79,7 +79,8 @@ const SoutenanceTeacher = () => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </Table></Card.Body></Card>
+        
       </Card.Body>
     </Card>
   );

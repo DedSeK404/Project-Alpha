@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { updateReport } from "../../JS/actions/rapportactions";
+import { updateReport, downloadReport } from "../../JS/actions/rapportactions";
 import { FaRegCalendarAlt, FaDownload } from "react-icons/fa";
 
 const RapportsTeacher = () => {
@@ -30,7 +30,6 @@ const RapportsTeacher = () => {
       message: messages[reportId],
     };
     dispatch(updateReport(reportId, updatedData));
-
     setMessages({ ...messages, [reportId]: "" });
   };
 
@@ -40,6 +39,10 @@ const RapportsTeacher = () => {
 
   const handleRevision = (reportId) => {
     dispatch(updateReport(reportId, { rapport_status: "revision" }));
+  };
+
+  const handleFileDownload = (reportId, filename) => {
+    dispatch(downloadReport(reportId, filename)); // Dispatch downloadReport action
   };
 
   const filteredRapports = allRapports.filter(
@@ -130,9 +133,12 @@ const RapportsTeacher = () => {
                       <tr key={fileIndex}>
                         <td>File {fileIndex + 1}</td>
                         <td>
-                          <a href={file} download>
+                          <Button
+                            variant="link"
+                            onClick={() => handleFileDownload(report._id, file)}
+                          >
                             <FaDownload /> Download
-                          </a>
+                          </Button>
                         </td>
                       </tr>
                     ))}
@@ -152,41 +158,56 @@ const RapportsTeacher = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-                <Form.Group controlId={`message-${report._id}`}>
-                  <Form.Label>Leave a comment:</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={messages[report._id]}
-                    onChange={(e) =>
-                      handleMessageChange(report._id, e.target.value)
-                    }
-                  />
-                </Form.Group>
 
-                <ButtonGroup
-                  style={{ width: "100%", marginTop: "10px" }}
-                  aria-label="Basic example"
-                >
-                  <Button
-                    onClick={() => handleUpdateMessage(report._id)}
-                    variant="secondary"
-                  >
-                    Add Comment
-                  </Button>
-                  <Button
-                    onClick={() => handleApprove(report._id)}
-                    variant="secondary"
-                  >
-                    Approve
-                  </Button>
-                  <Button
-                    onClick={() => handleRevision(report._id)}
-                    variant="secondary"
-                  >
-                    Revision
-                  </Button>
-                </ButtonGroup>
+                {report.date_soutenance ? (
+                  <Card bg="secondary" text="white" className="mt-3">
+                    <Card.Body>
+                      <Card.Text as={"h3"}>
+                        Stage completion confirmed, presentation date scheduled
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                ) : (
+                  <>
+                    {" "}
+                    <Form.Group controlId={`message-${report._id}`}>
+                      <Form.Label>Leave a comment:</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        value={messages[report._id]}
+                        onChange={(e) =>
+                          handleMessageChange(report._id, e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                    <ButtonGroup
+                      style={{ width: "100%", marginTop: "10px" }}
+                      aria-label="Basic example"
+                    >
+                      <Button
+                        onClick={() => handleUpdateMessage(report._id)}
+                        variant="secondary"
+                      >
+                        Add Comment
+                      </Button>
+                      <Button
+                        onClick={() => handleApprove(report._id)}
+                        variant="secondary"
+                        disabled={report.rapport_status === "approved"}
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        disabled={report.rapport_status === "revision"}
+                        onClick={() => handleRevision(report._id)}
+                        variant="secondary"
+                      >
+                        Revision
+                      </Button>
+                    </ButtonGroup>
+                  </>
+                )}
               </Card.Body>
             </Card>
           ))

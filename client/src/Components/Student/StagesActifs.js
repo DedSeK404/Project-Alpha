@@ -7,11 +7,19 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 const StagesActifs = () => {
   const currentUser = useSelector((state) => state.userR.currentUser);
   const allApplications = useSelector((state) => state.companyR.applications);
-
+  const allRapports = useSelector((state) => state.rapportR.reports);
+ 
   const approvedApplications = allApplications.filter((application) => {
+    // Check if there's no corresponding report with status 'approved'
+    const hasApprovedRapport = allRapports.some(
+      (rapport) => rapport.application._id === application._id &&  !rapport.date_soutenance 
+    );
+    
+    // Return true only if the application is approved and there's no corresponding approved report
     return (
       application.status === "approved" &&
-      application.student === currentUser._id
+      application.student === currentUser._id &&
+      hasApprovedRapport
     );
   });
 

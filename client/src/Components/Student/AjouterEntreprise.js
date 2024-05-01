@@ -34,32 +34,40 @@ const AjouterEntreprise = () => {
         </Card.Text>
         <hr />
         <Card.Body>
-          <Form onSubmit={handleCompanySubmit}>
-            <Form.Group controlId="companyName">
-              <Form.Label>Company Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter company name"
-                value={addCompany.companyName}
-                onChange={(e) =>
-                  setAddCompany({ ...addCompany, companyName: e.target.value })
-                }
-              />
-            </Form.Group>
-            <Button
-              style={{
-                backgroundColor: "#6A62FA",
-                borderColor: "#6A62FA",
-                borderRadius: "30px",
-                width: "100%",
-                marginTop: "20px",
-              }}
-              variant="primary"
-              type="submit"
-            >
-              Add Company
-            </Button>
-          </Form>
+          <Card>
+            <Card.Body>
+              {" "}
+              <Form onSubmit={handleCompanySubmit}>
+                <Form.Group controlId="companyName">
+                  <Form.Label>Company Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter company name"
+                    value={addCompany.companyName}
+                    onChange={(e) =>
+                      setAddCompany({
+                        ...addCompany,
+                        companyName: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+                <Button
+                  style={{
+                    backgroundColor: "#6A62FA",
+                    borderColor: "#6A62FA",
+                    borderRadius: "30px",
+                    width: "100%",
+                    marginTop: "20px",
+                  }}
+                  variant="primary"
+                  type="submit"
+                >
+                  Add Company
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
         </Card.Body>
       </Card>
 
@@ -81,36 +89,38 @@ const AjouterEntreprise = () => {
               </Card.Body>
             </Card>
           ) : (
-            <div>
-              <Table variant="light" striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Company Name</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {allCompanies
-                    .filter((company) => company.student === currentUser._id)
-                    .map((company, index) => (
-                      <tr key={company._id}>
-                        <td>{index + 1}</td>
-                        <td>{company.companyName}</td>
-                        <td>
-                          <Button
-                            style={{ width: "100%" }}
-                            variant="danger"
-                            onClick={() => handleDelete(company._id)}
-                          >
-                            Delete
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-            </div>
+            <Card>
+              <Card.Body>
+                <Table variant="light" striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Company Name</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allCompanies
+                      .filter((company) => company.student === currentUser._id)
+                      .map((company, index) => (
+                        <tr key={company._id}>
+                          <td>{index + 1}</td>
+                          <td>{company.companyName}</td>
+                          <td>
+                            <Button
+                              style={{ width: "100%" }}
+                              variant="danger"
+                              onClick={() => handleDelete(company._id)}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
           )}
         </Card.Body>
       </Card>

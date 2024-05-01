@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { updateReport } from "../../JS/actions/rapportactions";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import "./datepicker.css"
+import "./datepicker.css";
 const RapportsAdmin = () => {
   const dispatch = useDispatch();
   const allReports = useSelector((state) => state.rapportR.reports);
@@ -100,12 +100,17 @@ const RapportsAdmin = () => {
                   <Card.Header>Choose Date for Presentation</Card.Header>
                   <Card.Body>
                     <DatePicker
-                  
                       selected={selectedDates[report._id] || null}
                       onChange={(date) => handleDateChange(date, report._id)}
                       dateFormat="dd/MM/yyyy"
                       placeholderText="Select a date"
                     />
+                    {report.date_soutenance && (
+                      <h3>
+                        <span>Application date was set on:</span>{" "}
+                        {moment(report.date_soutenance).format("YYYY-MM-DD")}
+                      </h3>
+                    )}
                   </Card.Body>
                   <Card.Footer>
                     <Button
