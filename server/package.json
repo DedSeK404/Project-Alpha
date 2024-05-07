@@ -24,6 +24,7 @@
     "multer": "^1.4.5-lts.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
-    "server": "^1.0.39"
+    "server": "^1.0.39",
+    "socket.io": "^4.7.5"
   }
 }

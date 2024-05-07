@@ -42,10 +42,11 @@ export const createReport = (newReportData,notificationData) => async (dispatch)
 
     const res = await axios.post(baseURL + "add", formData, config);
 
-    alert(`${res.data.msg}`);
+    
     dispatch({ type: CREATEREPORTSUCCESS });
     dispatch(getAllReports());
     dispatch(postNotification(notificationData));
+    alert(`${res.data.msg}`);
   } catch (error) {
     dispatch({ type: RAPPORTFAILED, payload: error });
     console.log(error);
@@ -108,7 +109,7 @@ export const getAllReports = () => async (dispatch) => {
  * @description update report
  * @access Protected (only accessible to authenticated users)
  */
-export const updateReport = (reportId, updatedData,notificationData) => async (dispatch) => {
+export const updateReport = (reportId, updatedData,notificationData) => async (dispatch) => { 
   try {
     const res = await axios.put(baseURL + `${reportId}`, updatedData);
 
@@ -118,6 +119,7 @@ export const updateReport = (reportId, updatedData,notificationData) => async (d
     });
     dispatch(getAllReports());
     dispatch(postNotification(notificationData));
+    
     alert(`${res.data.msg}`);
   } catch (error) {
     dispatch({

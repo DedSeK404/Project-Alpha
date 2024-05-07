@@ -4,6 +4,7 @@ import { createReport } from "../../JS/actions/rapportactions";
 import { Card, ListGroup, Accordion, Button } from "react-bootstrap";
 import moment from "moment";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { updateNotification } from "../../JS/actions/notificationactions";
 
 const Rapports = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const Rapports = () => {
       };
 
       dispatch(createReport(newReportData, notificationData));
+      dispatch(updateNotification(notificationData));
       setSelectedFiles([]);
     } else {
       alert("Please select one or more files to upload.");

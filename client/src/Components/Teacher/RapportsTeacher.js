@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { updateReport, downloadReport } from "../../JS/actions/rapportactions";
 import { FaRegCalendarAlt, FaDownload } from "react-icons/fa";
+import { updateNotification } from "../../JS/actions/notificationactions";
 
 const RapportsTeacher = () => {
   const dispatch = useDispatch();
@@ -29,11 +30,11 @@ const RapportsTeacher = () => {
     const updatedData = {
       message: messages[reportId],
     };
-  
+
     const notificationData = {
       sender: "teacher_message",
       toAdmin: false,
-      isEdited:true,
+      isEdited: true,
       teacher_id: currentUser._id,
       student: report.student,
       message: `Teacher: ${report.application.teacher_first_name} ${
@@ -46,17 +47,25 @@ const RapportsTeacher = () => {
         "MMMM Do YYYY"
       )}`,
       timestamp: Date.now(),
-      isEdited: true,
     };
     dispatch(updateReport(reportId, updatedData, notificationData));
     setMessages({ ...messages, [reportId]: "" });
+    dispatch(
+      updateNotification({
+        sender: "teacher_message",
+        applicationStateTeacher: "message",
+        isEdited: true,
+        student: report.student,
+        timestamp: Date.now(),
+      })
+    );
   };
 
-  const handleApprove = (reportId,report) => {
+  const handleApprove = (reportId, report) => {
     const notificationData = {
       sender: "teacher_approve",
       toAdmin: true,
-      isEdited:true,
+      isEdited: true,
       teacher_id: currentUser._id,
       student: report.student,
       message: `Teacher: ${report.application.teacher_first_name} ${
@@ -69,18 +78,27 @@ const RapportsTeacher = () => {
         "MMMM Do YYYY"
       )}`,
       timestamp: Date.now(),
-      isEdited: true,
     };
     dispatch(
       updateReport(reportId, { rapport_status: "approved" }, notificationData)
     );
+    dispatch(
+      updateNotification({
+        sender: "teacher_approve",
+        applicationStateTeacher: "message",
+        isEdited: true,
+        student: report.student,
+        toAdmin: true,
+        timestamp: Date.now(),
+      })
+    );
   };
 
-  const handleRevision = (reportId,report) => {
+  const handleRevision = (reportId, report) => {
     const notificationData = {
       sender: "teacher_decline",
       toAdmin: false,
-      isEdited:true,
+      isEdited: true,
       teacher_id: currentUser._id,
       student: report.student,
       message: `Teacher: ${report.application.teacher_first_name} ${
@@ -93,10 +111,18 @@ const RapportsTeacher = () => {
         "MMMM Do YYYY"
       )}`,
       timestamp: Date.now(),
-      isEdited: true,
     };
     dispatch(
       updateReport(reportId, { rapport_status: "revision" }, notificationData)
+    );
+    dispatch(
+      updateNotification({
+        sender: "teacher_decline",
+        applicationStateTeacher: "message",
+        isEdited: true,
+        student: report.student,
+        timestamp: Date.now(),
+      })
     );
   };
 

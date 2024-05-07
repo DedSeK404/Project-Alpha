@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Nav, Image } from "react-bootstrap";
+import { Container, Row, Col, Nav, Image, Toast } from "react-bootstrap";
 import { logout } from "../../JS/actions/useraction";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -23,12 +23,33 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { TbLogout2 } from "react-icons/tb";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { getAllNotifications } from "../../JS/actions/notificationactions";
+import { io } from "socket.io-client";
+import moment from "moment";
 
 const AdminDashboard = () => {
   const currentUser = useSelector((state) => state.userR.currentUser);
   const allNotifications = useSelector(
     (state) => state.notificationR.notifications
   );
+  const [showToast, setShowToast] = useState(false);
+  const [notificationData, setNotificationData] = useState({});
+
+  useEffect(() => {
+    const socket = io("http://localhost:4500"); // Replace with your server URL
+
+    // Event listener for "newNotification" event from the server
+    socket.on("newNotification", (data) => {
+   
+      if (data.toAdmin === true) {
+        setNotificationData(data);
+        setShowToast(true);
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("tab1");
@@ -65,8 +86,44 @@ const AdminDashboard = () => {
   );
 
   const hasUnreadNotifications = userNotifications.length > 0;
+  const handleCloseToast = () => {
+    dispatch(getAllNotifications());
+    setShowToast(false);
+  };
+ 
   return (
     <Container style={{ background: "#3A3B3D" }} fluid>
+      <div style={{ position: "fixed", top: "2%", right: "2%", zIndex: "2" }}>
+        <Toast bg="secondary" show={showToast} onClose={handleCloseToast}>
+          <Toast.Header>
+            <strong className="me-auto">Notification</strong>
+          </Toast.Header>
+          <Toast.Body>
+            <strong style={{ color: "white" }}>
+              {notificationData.sender === "teacher_approve"
+                ? "A teacher"
+                : notificationData.sender}
+            </strong>
+            <p style={{ color: "white" }}>
+              {notificationData.sender === "teacher_approve"
+                ? "has approved an application's report"
+                : "has submitted an application"}
+            </p>
+            <p
+              style={{
+                fontSize: "smaller",
+                color: "#CCCCCC",
+                textAlign: "end",
+                margin: "-10px 0px",
+              }}
+            >
+              {moment(notificationData.timestamp).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              )}
+            </p>
+          </Toast.Body>
+        </Toast>
+      </div>
       <Row>
         <Col
           style={{ minHeight: "100vh", height: "auto" }}

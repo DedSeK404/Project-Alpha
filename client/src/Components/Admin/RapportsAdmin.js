@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { updateReport } from "../../JS/actions/rapportactions";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import "./datepicker.css";
+import { updateNotification } from "../../JS/actions/notificationactions";
 const RapportsAdmin = () => {
   const dispatch = useDispatch();
   const allReports = useSelector((state) => state.rapportR.reports);
@@ -48,6 +49,16 @@ const RapportsAdmin = () => {
         { date_soutenance: selectedDates[reportId] },
         notificationData
       )
+    );
+    dispatch(
+      updateNotification({
+        sender: "admin_soutenance",
+        isEdited: true,
+        student: report.student,
+        timestamp: Date.now(),
+        toAdmin:false,
+        teacher_id:report.application.teacher_id
+      })
     );
   };
 

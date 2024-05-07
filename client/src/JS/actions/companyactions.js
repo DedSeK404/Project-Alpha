@@ -111,17 +111,18 @@ export const addApplication =
     dispatch({
       type: APPLICATIONLOADING,
     });
-console.log(notificationData)
+
     try {
       const res = await axios.post(
         baseURLApplication + "application/add",
         newApplication
       );
 
-      alert(`${res.data.msg}`);
+      
       dispatch({ type: ADDAPPLICATIONSUCCESS });
       dispatch(getallApplications());
       dispatch(postNotification(notificationData));
+      alert(`${res.data.msg}`);
     } catch (error) {
       dispatch({ type: APPLICATIONFAILED, payload: error });
       console.log(error);
@@ -152,10 +153,11 @@ export const editApplication =
         editData
       );
 
-      alert(`${data.msg}`);
+   
       dispatch({ type: EDITAPPLICATIONSUCCESS, payload: data.msg });
       dispatch(getallApplications());
       dispatch(postNotification(editData.notificationData));
+      alert(`${data.msg}`);
     } catch (error) {
       dispatch({ type: APPLICATIONFAILED, payload: error });
       console.log(error);

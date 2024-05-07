@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { editApplication } from "../../JS/actions/companyactions";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { updateNotification } from "../../JS/actions/notificationactions";
 
 const ApplicationDetails = ({ application, handleAction, allRapports }) => {
   const getStatusColor = (status) => {
@@ -166,8 +167,9 @@ const DemandeStageAdmin = () => {
       message: message,
     });
   };
- 
-  const handleConfirmAction = () => {
+
+  const handleConfirmAction = (e) => {
+    e.preventDefault();
     const status = actionType === "approve" ? "approved" : "declined";
     const sender =
       actionType === "approve" ? "admin_approved" : "admin_declined";
@@ -180,6 +182,12 @@ const DemandeStageAdmin = () => {
           ...notificationData,
           sender: sender,
         },
+      })
+    );
+    dispatch(
+      updateNotification({
+        ...notificationData,
+        applicationState: actionType === "approve" ? "approved" : "declined", 
       })
     );
     setShowModal(false);
@@ -210,7 +218,7 @@ const DemandeStageAdmin = () => {
       </Card>
     );
   }
-  
+
   return (
     <>
       <Card

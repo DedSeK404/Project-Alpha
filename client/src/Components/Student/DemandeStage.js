@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addApplication } from "../../JS/actions/companyactions";
 import moment from "moment";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { updateNotification } from "../../JS/actions/notificationactions";
 
 const DemandeStage = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const DemandeStage = () => {
     }
 
     dispatch(addApplication(formData, notificationData));
+    dispatch(updateNotification({...notificationData,hideS:true}));
   };
 
   const handleChange = (e) => {
@@ -54,30 +56,33 @@ const DemandeStage = () => {
       const selectedTeacher = allAccounts.find(
         (teacher) => `${teacher.first_name} ${teacher.last_name}` === value
       );
-      setFormData({
-        ...formData,
+      setFormData(prevState => ({
+        ...prevState,
         teacher_first_name: selectedTeacher?.first_name || "",
         teacher_last_name: selectedTeacher?.last_name || "",
         teacher_id: selectedTeacher?._id || "",
-      });
-      setNotificationData({
-        ...notificationData,
+      }));
+      setNotificationData(prevState => ({
+        ...prevState,
         teacher_id: selectedTeacher?._id || "",
         student: formData.student,
         message: `Teacher: ${selectedTeacher?.first_name} ${selectedTeacher?.last_name}\nStudent: ${currentUser.first_name} ${currentUser.last_name}\nCompany: ${formData.companyName}\nDate: ${formData.startDate} - ${formData.endDate}`,
-      });
+      }));
     } else {
-      setFormData({
-        ...formData,
+      setFormData(prevState => ({
+        ...prevState,
         [name]: value,
-      });
-
+      }));
+  
+      // Construct message using current values
+      const message = `Teacher: ${formData.teacher_first_name} ${formData.teacher_last_name}\nStudent: ${currentUser.first_name} ${currentUser.last_name}\nCompany: ${formData.companyName}\nDate: ${name === "startDate" ? value + " - " + formData.endDate : formData.startDate + " - " + value}`;
+      
       // Update notificationData for startDate and endDate
       if (name === "startDate" || name === "endDate") {
-        setNotificationData({
-          ...notificationData,
-          message: `Teacher: ${formData.teacher_first_name} ${formData.teacher_last_name}\nStudent: ${currentUser.first_name} ${currentUser.last_name}\nCompany: ${formData.companyName}\nDate: ${formData.startDate} - ${formData.endDate}`,
-        });
+        setNotificationData(prevState => ({
+          ...prevState,
+          message: message,
+        }));
       }
     }
   };
