@@ -10,18 +10,17 @@ const StagesActifsTeacher = () => {
   const allRapports = useSelector((state) => state.rapportR.reports);
 
   const approvedApplications = allApplications.filter((application) => {
-    // Check if there's no corresponding report with non-empty 'date_soutenance' for the application
-    const hasReportWithDateSoutenance = allRapports.some(
+    // Check if all corresponding reports have a date_soutenance
+    const allRapportsHaveDateSoutenance = allRapports.some(
       (rapport) =>
-        rapport.application._id === application._id &&
-        !rapport.date_soutenance 
+        rapport.application._id === application._id && rapport.date_soutenance
     );
-
-    // Return true only if the application is approved and there's no corresponding report with 'date_soutenance'
+  
+    // Return true only if the application is approved and there's at least one corresponding approved report without a date_soutenance
     return (
       application.status === "approved" &&
       currentUser._id === application.teacher_id &&
-      hasReportWithDateSoutenance
+      !allRapportsHaveDateSoutenance
     );
   });
 

@@ -25,20 +25,79 @@ const RapportsTeacher = () => {
     setMessages({ ...messages, [reportId]: message });
   };
 
-  const handleUpdateMessage = (reportId) => {
+  const handleUpdateMessage = (reportId, report) => {
     const updatedData = {
       message: messages[reportId],
     };
-    dispatch(updateReport(reportId, updatedData));
+  
+    const notificationData = {
+      sender: "teacher_message",
+      toAdmin: false,
+      isEdited:true,
+      teacher_id: currentUser._id,
+      student: report.student,
+      message: `Teacher: ${report.application.teacher_first_name} ${
+        report.application.teacher_last_name
+      }\nStudent: ${report.application.first_name} ${
+        report.application.last_name
+      }\nCompany: ${report.application.companyName}\nDate: ${moment(
+        report.application.startDate
+      ).format("MMMM Do YYYY")} - ${moment(report.application.endDate).format(
+        "MMMM Do YYYY"
+      )}`,
+      timestamp: Date.now(),
+      isEdited: true,
+    };
+    dispatch(updateReport(reportId, updatedData, notificationData));
     setMessages({ ...messages, [reportId]: "" });
   };
 
-  const handleApprove = (reportId) => {
-    dispatch(updateReport(reportId, { rapport_status: "approved" }));
+  const handleApprove = (reportId,report) => {
+    const notificationData = {
+      sender: "teacher_approve",
+      toAdmin: true,
+      isEdited:true,
+      teacher_id: currentUser._id,
+      student: report.student,
+      message: `Teacher: ${report.application.teacher_first_name} ${
+        report.application.teacher_last_name
+      }\nStudent: ${report.application.first_name} ${
+        report.application.last_name
+      }\nCompany: ${report.application.companyName}\nDate: ${moment(
+        report.application.startDate
+      ).format("MMMM Do YYYY")} - ${moment(report.application.endDate).format(
+        "MMMM Do YYYY"
+      )}`,
+      timestamp: Date.now(),
+      isEdited: true,
+    };
+    dispatch(
+      updateReport(reportId, { rapport_status: "approved" }, notificationData)
+    );
   };
 
-  const handleRevision = (reportId) => {
-    dispatch(updateReport(reportId, { rapport_status: "revision" }));
+  const handleRevision = (reportId,report) => {
+    const notificationData = {
+      sender: "teacher_decline",
+      toAdmin: false,
+      isEdited:true,
+      teacher_id: currentUser._id,
+      student: report.student,
+      message: `Teacher: ${report.application.teacher_first_name} ${
+        report.application.teacher_last_name
+      }\nStudent: ${report.application.first_name} ${
+        report.application.last_name
+      }\nCompany: ${report.application.companyName}\nDate: ${moment(
+        report.application.startDate
+      ).format("MMMM Do YYYY")} - ${moment(report.application.endDate).format(
+        "MMMM Do YYYY"
+      )}`,
+      timestamp: Date.now(),
+      isEdited: true,
+    };
+    dispatch(
+      updateReport(reportId, { rapport_status: "revision" }, notificationData)
+    );
   };
 
   const handleFileDownload = (reportId, filename) => {
@@ -186,13 +245,13 @@ const RapportsTeacher = () => {
                       aria-label="Basic example"
                     >
                       <Button
-                        onClick={() => handleUpdateMessage(report._id)}
+                        onClick={() => handleUpdateMessage(report._id, report)}
                         variant="secondary"
                       >
                         Add Comment
                       </Button>
                       <Button
-                        onClick={() => handleApprove(report._id)}
+                        onClick={() => handleApprove(report._id, report)}
                         variant="secondary"
                         disabled={report.rapport_status === "approved"}
                       >
@@ -200,7 +259,7 @@ const RapportsTeacher = () => {
                       </Button>
                       <Button
                         disabled={report.rapport_status === "revision"}
-                        onClick={() => handleRevision(report._id)}
+                        onClick={() => handleRevision(report._id, report)}
                         variant="secondary"
                       >
                         Revision

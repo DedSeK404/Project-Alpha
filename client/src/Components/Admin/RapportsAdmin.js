@@ -22,9 +22,32 @@ const RapportsAdmin = () => {
     setSelectedDates({ ...selectedDates, [reportId]: date });
   };
 
-  const handleRevision = (reportId) => {
+  const handleRevision = (reportId, report) => {
+   
+    const notificationData = {
+      sender: "admin_soutenance",
+      toAdmin: false,
+      isEdited: true,
+      student: report.student,
+      teacher_id: report.application.teacher_id,
+      message: `Teacher: ${report.application.teacher_first_name} ${
+        report.application.teacher_last_name
+      }\nStudent: ${report.application.first_name} ${
+        report.application.last_name
+      }\nCompany: ${report.application.companyName}\nDate: ${moment(
+        report.application.startDate
+      ).format("MMMM Do YYYY")} - ${moment(report.application.endDate).format(
+        "MMMM Do YYYY"
+      )}`,
+      timestamp: Date.now(),
+      isEdited: true,
+    };
     dispatch(
-      updateReport(reportId, { date_soutenance: selectedDates[reportId] })
+      updateReport(
+        reportId,
+        { date_soutenance: selectedDates[reportId] },
+        notificationData
+      )
     );
   };
 
@@ -121,7 +144,7 @@ const RapportsAdmin = () => {
                         width: "100%",
                       }}
                       variant="primary"
-                      onClick={() => handleRevision(report._id)}
+                      onClick={() => handleRevision(report._id, report)}
                     >
                       Set Date
                     </Button>

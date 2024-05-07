@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Nav, Image } from "react-bootstrap";
 import { logout } from "../../JS/actions/useraction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import DemandeStage from "../Student/DemandeStage";
 import {
@@ -23,13 +23,21 @@ import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { IoCalendarOutline } from "react-icons/io5";
 import { TbLogout2 } from "react-icons/tb";
 import { BsBuildings } from "react-icons/bs";
+import { getAllNotifications } from "../../JS/actions/notificationactions";
+import NotificationPanelStudent from "../Student/NotificationPanelStudent";
+import { IoNotificationsCircleOutline } from "react-icons/io5";
 
 const StudentDashboard = () => {
+  const currentUser = useSelector((state) => state.userR.currentUser);
+  const allNotifications = useSelector(
+    (state) => state.notificationR.notifications
+  );
   useEffect(() => {
     dispatch(getallCompanies());
     dispatch(getallApplications());
     dispatch(getAllAccounts());
     dispatch(getAllReports());
+    dispatch(getAllNotifications());
   }, []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,6 +60,17 @@ const StudentDashboard = () => {
   };
   const logoMarginLeft = isMouseOver ? "0%" : "-100%";
   const circlelogoMarginLeft = isMouseOver ? "100%" : "-25%";
+
+  const userNotifications = allNotifications.filter(
+    (notification) =>
+      notification.student === currentUser._id &&
+      notification.isEdited &&
+      notification.sender !== "student report" &&
+      notification.studentStatus === "unread"
+  );
+
+  const hasUnreadNotifications = userNotifications.length > 0;
+
   return (
     <Container style={{ background: "#3A3B3D" }} fluid>
       <Row>
@@ -109,18 +128,29 @@ const StudentDashboard = () => {
             >
               <Nav.Item>
                 <Nav.Link eventKey="tab1">
+                  <IoNotificationsCircleOutline
+                    size={30}
+                    style={{
+                      color: hasUnreadNotifications ? "#D74E21" : "white",
+                    }}
+                  />
+                  <span>Notifications</span>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="tab2">
                   <RiNewspaperLine size={30} />
                   <span> Demandes de Stages</span>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="tab2">
+                <Nav.Link eventKey="tab3">
                   <FaGears size={30} />
                   <span> Stages Actifs</span>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="tab3">
+                <Nav.Link eventKey="tab4">
                   <BsBuildings size={30} />
                   <span> Ajouter une entreprise</span>
                 </Nav.Link>
@@ -155,9 +185,10 @@ const StudentDashboard = () => {
           }}
         >
           <div className="p-4">
-            {activeTab === "tab1" && <DemandeStage />}
-            {activeTab === "tab2" && <StagesActifs />}
-            {activeTab === "tab3" && <AjouterEntreprise />}
+            {activeTab === "tab1" && <NotificationPanelStudent />}
+            {activeTab === "tab2" && <DemandeStage />}
+            {activeTab === "tab3" && <StagesActifs />}
+            {activeTab === "tab4" && <AjouterEntreprise />}
             {activeTab === "tab5" && <Rapports />}
             {activeTab === "tab6" && <SoutenanceStudent />}
           </div>

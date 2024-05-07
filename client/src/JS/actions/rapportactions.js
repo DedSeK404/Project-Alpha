@@ -9,15 +9,16 @@ import {
   UPDATE_REPORT_SUCCESS,
   UPDATE_REPORT_FAIL,
 } from "../actiontypes/rapporttypes";
+import { postNotification } from "./notificationactions";
 
 const baseURL = "http://localhost:4500/rapport/";
 
 /**
  *@method POST /rapport/add
  *@description post a report
- *@access protected(authentifié+role:student)
+ *@access protected(authentifié+role:student) 
  */
-export const createReport = (newReportData) => async (dispatch) => {
+export const createReport = (newReportData,notificationData) => async (dispatch) => {
   dispatch({
     type: RAPPORTLOADING,
   });
@@ -44,6 +45,7 @@ export const createReport = (newReportData) => async (dispatch) => {
     alert(`${res.data.msg}`);
     dispatch({ type: CREATEREPORTSUCCESS });
     dispatch(getAllReports());
+    dispatch(postNotification(notificationData));
   } catch (error) {
     dispatch({ type: RAPPORTFAILED, payload: error });
     console.log(error);
@@ -106,7 +108,7 @@ export const getAllReports = () => async (dispatch) => {
  * @description update report
  * @access Protected (only accessible to authenticated users)
  */
-export const updateReport = (reportId, updatedData) => async (dispatch) => {
+export const updateReport = (reportId, updatedData,notificationData) => async (dispatch) => {
   try {
     const res = await axios.put(baseURL + `${reportId}`, updatedData);
 
@@ -115,6 +117,7 @@ export const updateReport = (reportId, updatedData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(getAllReports());
+    dispatch(postNotification(notificationData));
     alert(`${res.data.msg}`);
   } catch (error) {
     dispatch({

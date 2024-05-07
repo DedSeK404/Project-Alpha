@@ -26,6 +26,15 @@ const DemandeStage = () => {
     teacher_id: "",
   });
 
+  const [notificationData, setNotificationData] = useState({
+    sender: `${currentUser.first_name} ${currentUser.last_name}`,
+    toAdmin: true,
+    student: "",
+    teacher_id: "",
+    message: "",
+    timestamp: Date.now(),
+  });
+
   const handleApplicationSubmit = (e) => {
     e.preventDefault();
 
@@ -36,7 +45,7 @@ const DemandeStage = () => {
       return;
     }
 
-    dispatch(addApplication(formData));
+    dispatch(addApplication(formData, notificationData));
   };
 
   const handleChange = (e) => {
@@ -51,11 +60,25 @@ const DemandeStage = () => {
         teacher_last_name: selectedTeacher?.last_name || "",
         teacher_id: selectedTeacher?._id || "",
       });
+      setNotificationData({
+        ...notificationData,
+        teacher_id: selectedTeacher?._id || "",
+        student: formData.student,
+        message: `Teacher: ${selectedTeacher?.first_name} ${selectedTeacher?.last_name}\nStudent: ${currentUser.first_name} ${currentUser.last_name}\nCompany: ${formData.companyName}\nDate: ${formData.startDate} - ${formData.endDate}`,
+      });
     } else {
       setFormData({
         ...formData,
         [name]: value,
       });
+
+      // Update notificationData for startDate and endDate
+      if (name === "startDate" || name === "endDate") {
+        setNotificationData({
+          ...notificationData,
+          message: `Teacher: ${formData.teacher_first_name} ${formData.teacher_last_name}\nStudent: ${currentUser.first_name} ${currentUser.last_name}\nCompany: ${formData.companyName}\nDate: ${formData.startDate} - ${formData.endDate}`,
+        });
+      }
     }
   };
 

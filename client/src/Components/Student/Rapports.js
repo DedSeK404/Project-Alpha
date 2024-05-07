@@ -36,7 +36,25 @@ const Rapports = () => {
         message: "",
         files: selectedFiles,
       };
-      dispatch(createReport(newReportData));
+      const notificationData = {
+        sender: "student report",
+        toAdmin: false,
+        student: currentUser._id,
+        teacher_id: application.teacher_id || "",
+        message: `Teacher: ${application?.teacher_first_name} ${
+          application?.teacher_last_name
+        }\nStudent: ${application.first_name} ${
+          application.last_name
+        }\nCompany: ${application.companyName}\nDate: ${moment(
+          application.startDate
+        ).format("MMMM Do YYYY")} - ${moment(application.endDate).format(
+          "MMMM Do YYYY"
+        )}`,
+        timestamp: Date.now(),
+        isEdited: true,
+      };
+
+      dispatch(createReport(newReportData, notificationData));
       setSelectedFiles([]);
     } else {
       alert("Please select one or more files to upload.");
@@ -124,7 +142,7 @@ const Rapports = () => {
                 )?.rapport_status === "approved" ? (
                   <Card bg="success" text="white">
                     <Card.Header as={"h3"}>
-                    This report has been approved by your teacher.
+                      This report has been approved by your teacher.
                     </Card.Header>
                   </Card>
                 ) : (

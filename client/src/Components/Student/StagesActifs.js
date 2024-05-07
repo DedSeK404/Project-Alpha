@@ -8,18 +8,19 @@ const StagesActifs = () => {
   const currentUser = useSelector((state) => state.userR.currentUser);
   const allApplications = useSelector((state) => state.companyR.applications);
   const allRapports = useSelector((state) => state.rapportR.reports);
- 
+
   const approvedApplications = allApplications.filter((application) => {
-    // Check if there's no corresponding report with status 'approved'
-    const hasApprovedRapport = allRapports.some(
-      (rapport) => rapport.application._id === application._id &&  !rapport.date_soutenance 
+    // Check if all corresponding reports have a date_soutenance
+    const allRapportsHaveDateSoutenance = allRapports.some(
+      (rapport) =>
+        rapport.application._id === application._id && rapport.date_soutenance
     );
-    
-    // Return true only if the application is approved and there's no corresponding approved report
+
+    // Return true only if the application is approved and there's at least one corresponding approved report without a date_soutenance
     return (
       application.status === "approved" &&
       application.student === currentUser._id &&
-      hasApprovedRapport
+      !allRapportsHaveDateSoutenance
     );
   });
 
@@ -56,39 +57,44 @@ const StagesActifs = () => {
           </Card.Text>
           <hr />
           <Card.Body>
-            <Table variant="light" striped bordered hover>
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Company Name</th>
-                  <th>Teacher</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {approvedApplications.map((application) => (
-                  <tr key={application._id}>
-                    <td>{application.first_name}</td>
-                    <td>{application.last_name}</td>
-                    <td>{application.companyName}</td>
-                    <td>
-                      {application.teacher_first_name}{" "}
-                      {application.teacher_last_name}
-                    </td>
-                    <td>
-                      <FaRegCalendarAlt />{" "}
-                      {moment(application.startDate).format("MMMM Do YYYY")}
-                    </td>
-                    <td>
-                      <FaRegCalendarAlt />{" "}
-                      {moment(application.endDate).format("MMMM Do YYYY")}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <Card>
+              <Card.Body>
+                {" "}
+                <Table variant="light" striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Company Name</th>
+                      <th>Teacher</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {approvedApplications.map((application) => (
+                      <tr key={application._id}>
+                        <td>{application.first_name}</td>
+                        <td>{application.last_name}</td>
+                        <td>{application.companyName}</td>
+                        <td>
+                          {application.teacher_first_name}{" "}
+                          {application.teacher_last_name}
+                        </td>
+                        <td>
+                          <FaRegCalendarAlt />{" "}
+                          {moment(application.startDate).format("MMMM Do YYYY")}
+                        </td>
+                        <td>
+                          <FaRegCalendarAlt />{" "}
+                          {moment(application.endDate).format("MMMM Do YYYY")}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
           </Card.Body>
         </Card>
       )}

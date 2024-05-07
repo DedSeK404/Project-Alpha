@@ -9,12 +9,17 @@ const StagesActifsAdmin = () => {
   const allReports = useSelector((state) => state.rapportR.reports);
 
   const approvedApplications = allApplications.filter((application) => {
-    const hasReportWithDateSoutenance = allReports.some(
+    // Check if all corresponding reports have a date_soutenance
+    const allReportsHaveDateSoutenance = allReports.some(
       (rapport) =>
-        rapport.application._id === application._id && !rapport.date_soutenance
+        rapport.application._id === application._id && rapport.date_soutenance
     );
-
-    return application.status === "approved" && hasReportWithDateSoutenance;
+  
+    // Return true only if the application is approved and there's at least one corresponding report without a date_soutenance
+    return (
+      application.status === "approved" &&
+      !allReportsHaveDateSoutenance
+    );
   });
 
   if (approvedApplications.length === 0) {

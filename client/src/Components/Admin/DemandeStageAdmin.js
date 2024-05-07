@@ -120,6 +120,70 @@ const DemandeStageAdmin = () => {
   const [actionType, setActionType] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const currentUser = useSelector((state) => state.userR.currentUser);
+
+  const [notificationData, setNotificationData] = useState({
+    sender: "admin",
+    isEdited: true,
+    recipient: "",
+    teacher_id: "",
+    student: "",
+    message: "",
+    timestamp: Date.now(),
+  });
+
+  const handleAction = (applicationId, type) => {
+    setSelectedApplicationId(applicationId);
+    setActionType(type);
+    setShowModal(true);
+
+    // Find the application associated with the provided ID
+    const selectedApplication = allApplications.find(
+      (application) => application._id === applicationId
+    );
+
+    // Extract relevant data from the application
+    const {
+      teacher_first_name,
+      teacher_last_name,
+      startDate,
+      endDate,
+      companyName,
+      first_name,
+      last_name,
+    } = selectedApplication;
+
+    // Construct the message for the notification
+    const message = `Teacher: ${teacher_first_name} ${teacher_last_name}\nStudent: ${first_name} ${last_name}\nCompany: ${companyName}\nDate: ${moment(
+      startDate
+    ).format("MMMM Do YYYY")} - ${moment(endDate).format("MMMM Do YYYY")}`;
+
+    // Set the notification data
+    setNotificationData({
+      ...notificationData,
+      student: selectedApplication.student,
+      teacher_id: selectedApplication.teacher_id,
+      message: message,
+    });
+  };
+ 
+  const handleConfirmAction = () => {
+    const status = actionType === "approve" ? "approved" : "declined";
+    const sender =
+      actionType === "approve" ? "admin_approved" : "admin_declined";
+
+    dispatch(
+      editApplication({
+        status,
+        idApplication: selectedApplicationId,
+        notificationData: {
+          ...notificationData,
+          sender: sender,
+        },
+      })
+    );
+    setShowModal(false);
+  };
 
   const groupedApplications = allApplications.reduce((acc, application) => {
     const key = `${application.first_name} ${application.last_name}`;
@@ -129,23 +193,6 @@ const DemandeStageAdmin = () => {
     acc[key].push(application);
     return acc;
   }, {});
-
-  const handleAction = (applicationId, type) => {
-    setSelectedApplicationId(applicationId);
-    setActionType(type);
-    setShowModal(true);
-  };
-
-  const handleConfirmAction = () => {
-    const status = actionType === "approve" ? "approved" : "declined";
-    dispatch(
-      editApplication({
-        status,
-        idApplication: selectedApplicationId,
-      })
-    );
-    setShowModal(false);
-  };
 
   const filteredApplications = Object.keys(groupedApplications)
     .filter((key) => key.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -163,7 +210,7 @@ const DemandeStageAdmin = () => {
       </Card>
     );
   }
-
+  
   return (
     <>
       <Card

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Nav, Image } from "react-bootstrap";
 import { logout } from "../../JS/actions/useraction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DemandeStageAdmin from "../Admin/DemandeStageAdmin";
+import NotificationPanel from "../Admin/NotificationPanel";
 import { getallApplications } from "../../JS/actions/companyactions";
 import AccountManagement from "../Admin/AccountManagment";
 import { getAllAccounts } from "../../JS/actions/accountactions";
@@ -20,8 +21,14 @@ import { PiChalkboardTeacher } from "react-icons/pi";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { IoCalendarOutline } from "react-icons/io5";
 import { TbLogout2 } from "react-icons/tb";
+import { IoNotificationsCircleOutline } from "react-icons/io5";
+import { getAllNotifications } from "../../JS/actions/notificationactions";
 
 const AdminDashboard = () => {
+  const currentUser = useSelector((state) => state.userR.currentUser);
+  const allNotifications = useSelector(
+    (state) => state.notificationR.notifications
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("tab1");
@@ -31,6 +38,7 @@ const AdminDashboard = () => {
     dispatch(getallApplications());
     dispatch(getAllAccounts());
     dispatch(getAllReports());
+    dispatch(getAllNotifications());
   }, [dispatch]);
 
   const handleTabSelect = (eventKey) => {
@@ -51,6 +59,12 @@ const AdminDashboard = () => {
   };
   const logoMarginLeft = isMouseOver ? "0%" : "-100%";
   const circlelogoMarginLeft = isMouseOver ? "100%" : "-25%";
+  const userNotifications = allNotifications.filter(
+    (notification) =>
+      notification.toAdmin === true && notification.adminStatus === "unread"
+  );
+
+  const hasUnreadNotifications = userNotifications.length > 0;
   return (
     <Container style={{ background: "#3A3B3D" }} fluid>
       <Row>
@@ -108,12 +122,23 @@ const AdminDashboard = () => {
             >
               <Nav.Item>
                 <Nav.Link eventKey="tab1">
+                  <IoNotificationsCircleOutline
+                    style={{
+                      color: hasUnreadNotifications ? "#D74E21" : "white",
+                    }}
+                    size={30}
+                  />
+                  <span>Notifications</span>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="tab2">
                   <RiNewspaperLine size={30} />
                   <span>Demandes de Stages</span>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="tab2">
+                <Nav.Link eventKey="tab3">
                   <FaGears size={30} />
                   <span>Stages Actifs</span>
                 </Nav.Link>
@@ -152,8 +177,9 @@ const AdminDashboard = () => {
           }}
         >
           <div className="p-4">
-            {activeTab === "tab1" && <DemandeStageAdmin />}
-            {activeTab === "tab2" && <StagesActifsAdmin />}
+            {activeTab === "tab1" && <NotificationPanel />}
+            {activeTab === "tab2" && <DemandeStageAdmin />}
+            {activeTab === "tab3" && <StagesActifsAdmin />}
             {activeTab === "tab4" && <AccountManagement />}
             {activeTab === "tab5" && <RapportsAdmin />}
             {activeTab === "tab6" && <SoutenanceAdmin />}

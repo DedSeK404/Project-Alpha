@@ -11,6 +11,7 @@ import {
   GETALLAPPLICATIONSUCCESS,
   GETALLCOMPANIESSUCCESS,
 } from "../actiontypes/companytypes";
+import { postNotification } from "./notificationactions";
 
 const baseURL = "http://localhost:4500/stage/company/";
 const baseURLApplication = "http://localhost:4500/stage/";
@@ -105,31 +106,33 @@ export const getallApplications = () => async (dispatch) => {
  *@description add a new application
  *@access protected(authentifié+role:student)
  */
-export const addApplication = (newApplication) => async (dispatch) => {
-  dispatch({
-    type: APPLICATIONLOADING,
-  });
+export const addApplication =
+  (newApplication, notificationData) => async (dispatch) => {
+    dispatch({
+      type: APPLICATIONLOADING,
+    });
+console.log(notificationData)
+    try {
+      const res = await axios.post(
+        baseURLApplication + "application/add",
+        newApplication
+      );
 
-  try {
-    const res = await axios.post(
-      baseURLApplication + "application/add",
-      newApplication
-    );
-
-    alert(`${res.data.msg}`);
-    dispatch({ type: ADDAPPLICATIONSUCCESS });
-    dispatch(getallApplications());
-  } catch (error) {
-    dispatch({ type: APPLICATIONFAILED, payload: error });
-    console.log(error);
-    if (error.response.data.errors) {
-      error.response.data.errors.forEach((el) => alert(el.msg));
+      alert(`${res.data.msg}`);
+      dispatch({ type: ADDAPPLICATIONSUCCESS });
+      dispatch(getallApplications());
+      dispatch(postNotification(notificationData));
+    } catch (error) {
+      dispatch({ type: APPLICATIONFAILED, payload: error });
+      console.log(error);
+      if (error.response.data.errors) {
+        error.response.data.errors.forEach((el) => alert(el.msg));
+      }
+      if (error.response.data.msg) {
+        alert(error.response.data.msg);
+      }
     }
-    if (error.response.data.msg) {
-      alert(error.response.data.msg);
-    }
-  }
-};
+  };
 
 /**
  * @route patch /application/edit
@@ -137,28 +140,30 @@ export const addApplication = (newApplication) => async (dispatch) => {
  * @access protected(authentifié+role:admin)
  */
 
-export const editApplication = (editData) => async (dispatch) => {
-  dispatch({
-    type: APPLICATIONLOADING,
-  });
+export const editApplication =
+  (editData) => async (dispatch) => {
+    dispatch({
+      type: APPLICATIONLOADING,
+    });
+    
+    try {
+      const { data } = await axios.patch(
+        baseURLApplication + "application/edit",
+        editData
+      );
 
-  try {
-    const { data } = await axios.patch(
-      baseURLApplication + "application/edit",
-      editData
-    );
-
-    alert(`${data.msg}`);
-    dispatch({ type: EDITAPPLICATIONSUCCESS, payload: data.msg });
-    dispatch(getallApplications());
-  } catch (error) {
-    dispatch({ type: APPLICATIONFAILED, payload: error });
-    console.log(error);
-    if (error.response.data.errors) {
-      error.response.data.errors.forEach((el) => alert(el.msg));
+      alert(`${data.msg}`);
+      dispatch({ type: EDITAPPLICATIONSUCCESS, payload: data.msg });
+      dispatch(getallApplications());
+      dispatch(postNotification(editData.notificationData));
+    } catch (error) {
+      dispatch({ type: APPLICATIONFAILED, payload: error });
+      console.log(error);
+      if (error.response.data.errors) {
+        error.response.data.errors.forEach((el) => alert(el.msg));
+      }
+      if (error.response.data.msg) {
+        alert(error.response.data.msg);
+      }
     }
-    if (error.response.data.msg) {
-      alert(error.response.data.msg);
-    }
-  }
-};
+  };
