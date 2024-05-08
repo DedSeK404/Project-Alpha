@@ -223,7 +223,7 @@ const DemandeStageAdmin = () => {
     }, {});
 
   const handleFileDownload = (applicationId, filename) => {
-    console.log(applicationId, filename)
+    
     dispatch(downloadApplicationReport(applicationId, filename)); 
   };
 
