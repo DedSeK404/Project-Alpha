@@ -127,7 +127,7 @@ const RapportsTeacher = () => {
   };
 
   const handleFileDownload = (reportId, filename) => {
-    dispatch(downloadReport(reportId, filename)); // Dispatch downloadReport action
+    dispatch(downloadReport(reportId, filename)); // Dispatch downloadReport action 
   };
 
   const filteredRapports = allRapports.filter(

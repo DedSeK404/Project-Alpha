@@ -59,14 +59,13 @@ module.exports.createCompany = [
     .withMessage("Please enter a company name"),
 ];
 
-module.exports.createApplication = [
-  body("companyName")
-    .notEmpty()
-    .trim()
-    .withMessage("Please enter a company name"),
-  body("teacher_id").notEmpty().withMessage("Please select a teacher"),
-  body("startDate").notEmpty().withMessage("Please enter a start date"),
-  body("endDate").notEmpty().withMessage("Please enter an end date"),
+module.exports.createApplication = [ 
+  body().custom((value, { req }) => {
+    if (!req.body) {
+      throw new Error("Request body cannot be empty");
+    }
+    return true;
+  }),
 ];
 
 module.exports.validator = (req, res, next) => {

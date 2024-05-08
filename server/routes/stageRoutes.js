@@ -12,6 +12,7 @@ const {
   addApplication,
   getallApplications,
   updateApplication,
+  downloadApplicationReport,
 } = require("../controllers/stageControllers");
 const router = express.Router();
 
@@ -44,7 +45,14 @@ router.delete("/company/delete/:companyID", deleteCompany);
  *@access protected(authentifié+role:student)
  */
 
-router.post("/application/add",createApplication,validator, addApplication);
+router.post("/application/add", createApplication, validator, addApplication);
+
+/**
+ * @method GET /application
+ * @description download applicationReport
+ * @access Protected (only accessible to authenticated users)
+ */
+router.get("/:id/download/uploads/:filename", downloadApplicationReport);
 
 /**
  * @route get /application/

@@ -11,11 +11,11 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { editApplication } from "../../JS/actions/companyactions";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import { downloadApplicationReport, editApplication } from "../../JS/actions/companyactions";
+import { FaRegCalendarAlt, FaDownload } from "react-icons/fa";
 import { updateNotification } from "../../JS/actions/notificationactions";
 
-const ApplicationDetails = ({ application, handleAction, allRapports }) => {
+const ApplicationDetails = ({ application, handleAction, handleFileDownload, allRapports }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case "pending":
@@ -70,6 +70,19 @@ const ApplicationDetails = ({ application, handleAction, allRapports }) => {
                   {application.status}
                 </td>
               </tr>
+              {application.file && (
+                <tr>
+                  <td>File:</td>
+                  <td>
+                    <Button
+                      variant="link"
+                      onClick={() => handleFileDownload(application._id, application.file)}
+                    >
+                      <FaDownload /> Download
+                    </Button>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
           <ButtonGroup
@@ -209,6 +222,11 @@ const DemandeStageAdmin = () => {
       return acc;
     }, {});
 
+  const handleFileDownload = (applicationId, filename) => {
+    console.log(applicationId, filename)
+    dispatch(downloadApplicationReport(applicationId, filename)); 
+  };
+
   if (allApplications.length === 0) {
     return (
       <Card>
@@ -254,6 +272,7 @@ const DemandeStageAdmin = () => {
                     key={innerIndex}
                     application={application}
                     handleAction={handleAction}
+                    handleFileDownload={handleFileDownload}
                     allRapports={allRapports}
                   />
                 ))}

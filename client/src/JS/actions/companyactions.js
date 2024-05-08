@@ -7,6 +7,8 @@ import {
   COMPANYFAILED,
   COMPANYLOADING,
   DELETECOMPANYSUCCESS,
+  DOWNLOAD_APPLICATION_FILE_FAILED,
+  DOWNLOAD_APPLICATION_FILE_SUCCESS,
   EDITAPPLICATIONSUCCESS,
   GETALLAPPLICATIONSUCCESS,
   GETALLCOMPANIESSUCCESS,
@@ -113,12 +115,30 @@ export const addApplication =
     });
 
     try {
+      const formData = new FormData();
+      formData.append("first_name", newApplication.first_name);
+      formData.append("last_name", newApplication.last_name);
+      formData.append("startDate", newApplication.startDate);
+      formData.append("endDate", newApplication.endDate);
+      formData.append("companyName", newApplication.companyName);
+      formData.append("teacher_first_name", newApplication.teacher_first_name);
+      formData.append("teacher_last_name", newApplication.teacher_last_name);
+      formData.append("teacher_id", newApplication.teacher_id);
+      formData.append("student", newApplication.student);
+      formData.append("file", newApplication.file);
+      console.log(formData.get("file"));
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
       const res = await axios.post(
         baseURLApplication + "application/add",
-        newApplication
+        formData,
+        config
       );
 
-      
       dispatch({ type: ADDAPPLICATIONSUCCESS });
       dispatch(getallApplications());
       dispatch(postNotification(notificationData));
@@ -141,31 +161,69 @@ export const addApplication =
  * @access protected(authentifié+role:admin)
  */
 
-export const editApplication =
-  (editData) => async (dispatch) => {
-    dispatch({
-      type: APPLICATIONLOADING,
-    });
+export const editApplication = (editData) => async (dispatch) => {
+  dispatch({
+    type: APPLICATIONLOADING,
+  });
+
+  try {
+    const { data } = await axios.patch(
+      baseURLApplication + "application/edit",
+      editData
+    );
+
+    dispatch({ type: EDITAPPLICATIONSUCCESS, payload: data.msg });
+    dispatch(getallApplications());
+    dispatch(postNotification(editData.notificationData));
+    alert(`${data.msg}`);
+  } catch (error) {
+    dispatch({ type: APPLICATIONFAILED, payload: error });
+    console.log(error);
+    if (error.response.data.errors) {
+      error.response.data.errors.forEach((el) => alert(el.msg));
+    }
+    if (error.response.data.msg) {
+      alert(error.response.data.msg);
+    }
+  }
+};
+
+/**
+ * @method GET /application
+ * @description download applicationReport
+ * @access Protected (only accessible to authenticated users)
+ */
+export const downloadApplicationReport =
+  (reportId, filename) => async (dispatch) => {
     
     try {
-      const { data } = await axios.patch(
-        baseURLApplication + "application/edit",
-        editData
+      const res = await axios.get(
+        `${baseURLApplication}${reportId}/download/${filename}`,
+        {
+          responseType: "blob",
+        }
       );
 
-   
-      dispatch({ type: EDITAPPLICATIONSUCCESS, payload: data.msg });
-      dispatch(getallApplications());
-      dispatch(postNotification(editData.notificationData));
-      alert(`${data.msg}`);
+      // Create a temporary URL for the blob data
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+
+      // Create a temporary link element to trigger the download
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+
+      // Append the link to the document body and trigger the download
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up: remove the link from the document body
+      document.body.removeChild(link);
+
+      // Dispatch success action
+      dispatch({ type: DOWNLOAD_APPLICATION_FILE_SUCCESS });
     } catch (error) {
-      dispatch({ type: APPLICATIONFAILED, payload: error });
-      console.log(error);
-      if (error.response.data.errors) {
-        error.response.data.errors.forEach((el) => alert(el.msg));
-      }
-      if (error.response.data.msg) {
-        alert(error.response.data.msg);
-      }
+      // Dispatch failure action with error payload
+      dispatch({ type: DOWNLOAD_APPLICATION_FILE_FAILED, payload: error });
+      console.error("Error downloading report:", error);
     }
   };

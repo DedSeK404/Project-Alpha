@@ -12,6 +12,7 @@ const applicationSchema = new mongoose.Schema({
   student: { type: mongoose.Types.ObjectId, ref: "users" },
   createdAt: { type: Date, default: Date.now() },
   status: { type: String },
+  file: { type: String }, 
 });
 
 const applicationModel = mongoose.model("application", applicationSchema);

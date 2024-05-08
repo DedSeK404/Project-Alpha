@@ -39,6 +39,23 @@ const DemandeStage = () => {
   const handleApplicationSubmit = (e) => {
     e.preventDefault();
 
+    // Define the required fields
+    const requiredFields = [
+      "companyName",
+      "file",
+      "startDate",
+      "endDate",
+      "teacher_id",
+    ];
+
+    // Check if any of the required fields are empty
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        alert(`${field} cannot be empty`);
+        return;
+      }
+    }
+
     const currentDate = new Date();
     const selectedStartDate = new Date(formData.startDate);
     if (selectedStartDate < currentDate) {
@@ -47,7 +64,7 @@ const DemandeStage = () => {
     }
 
     dispatch(addApplication(formData, notificationData));
-    dispatch(updateNotification({...notificationData,hideS:true}));
+    dispatch(updateNotification({ ...notificationData, hideS: true }));
   };
 
   const handleChange = (e) => {
@@ -56,30 +73,38 @@ const DemandeStage = () => {
       const selectedTeacher = allAccounts.find(
         (teacher) => `${teacher.first_name} ${teacher.last_name}` === value
       );
-      setFormData(prevState => ({
+      setFormData((prevState) => ({
         ...prevState,
         teacher_first_name: selectedTeacher?.first_name || "",
         teacher_last_name: selectedTeacher?.last_name || "",
         teacher_id: selectedTeacher?._id || "",
       }));
-      setNotificationData(prevState => ({
+      setNotificationData((prevState) => ({
         ...prevState,
         teacher_id: selectedTeacher?._id || "",
         student: formData.student,
         message: `Teacher: ${selectedTeacher?.first_name} ${selectedTeacher?.last_name}\nStudent: ${currentUser.first_name} ${currentUser.last_name}\nCompany: ${formData.companyName}\nDate: ${formData.startDate} - ${formData.endDate}`,
       }));
     } else {
-      setFormData(prevState => ({
+      setFormData((prevState) => ({
         ...prevState,
         [name]: value,
       }));
-  
+
       // Construct message using current values
-      const message = `Teacher: ${formData.teacher_first_name} ${formData.teacher_last_name}\nStudent: ${currentUser.first_name} ${currentUser.last_name}\nCompany: ${formData.companyName}\nDate: ${name === "startDate" ? value + " - " + formData.endDate : formData.startDate + " - " + value}`;
-      
+      const message = `Teacher: ${formData.teacher_first_name} ${
+        formData.teacher_last_name
+      }\nStudent: ${currentUser.first_name} ${
+        currentUser.last_name
+      }\nCompany: ${formData.companyName}\nDate: ${
+        name === "startDate"
+          ? value + " - " + formData.endDate
+          : formData.startDate + " - " + value
+      }`;
+
       // Update notificationData for startDate and endDate
       if (name === "startDate" || name === "endDate") {
-        setNotificationData(prevState => ({
+        setNotificationData((prevState) => ({
           ...prevState,
           message: message,
         }));
@@ -182,6 +207,17 @@ const DemandeStage = () => {
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleChange}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="file">
+                  <Form.Label>Upload File</Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="file"
+                    onChange={(e) =>
+                      setFormData({ ...formData, file: e.target.files[0] })
+                    }
                   />
                 </Form.Group>
                 <Button
