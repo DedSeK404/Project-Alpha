@@ -8,14 +8,27 @@ import {
   ButtonGroup,
   FormControl,
   InputGroup,
+  OverlayTrigger,
+  Image,
+  ListGroup,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { downloadApplicationReport, editApplication } from "../../JS/actions/companyactions";
+import {
+  downloadApplicationReport,
+  editApplication,
+} from "../../JS/actions/companyactions";
 import { FaRegCalendarAlt, FaDownload } from "react-icons/fa";
 import { updateNotification } from "../../JS/actions/notificationactions";
 
-const ApplicationDetails = ({ application, handleAction, handleFileDownload, allRapports }) => {
+import { getOneAccount } from "../../JS/actions/accountactions";
+
+const ApplicationDetails = ({
+  application,
+  handleAction,
+  handleFileDownload,
+  allRapports,
+}) => {
   const getStatusColor = (status) => {
     switch (status) {
       case "pending":
@@ -46,8 +59,10 @@ const ApplicationDetails = ({ application, handleAction, handleFileDownload, all
               <tr>
                 <td>Teacher:</td>
                 <td>
-                  {application.teacher_first_name}{" "}
-                  {application.teacher_last_name}
+                  <span>
+                    {application.teacher_first_name}{" "}
+                    {application.teacher_last_name}
+                  </span>
                 </td>
               </tr>
               <tr>
@@ -76,7 +91,9 @@ const ApplicationDetails = ({ application, handleAction, handleFileDownload, all
                   <td>
                     <Button
                       variant="link"
-                      onClick={() => handleFileDownload(application._id, application.file)}
+                      onClick={() =>
+                        handleFileDownload(application._id, application.file)
+                      }
                     >
                       <FaDownload /> Download
                     </Button>
@@ -200,7 +217,7 @@ const DemandeStageAdmin = () => {
     dispatch(
       updateNotification({
         ...notificationData,
-        applicationState: actionType === "approve" ? "approved" : "declined", 
+        applicationState: actionType === "approve" ? "approved" : "declined",
       })
     );
     setShowModal(false);
@@ -223,8 +240,7 @@ const DemandeStageAdmin = () => {
     }, {});
 
   const handleFileDownload = (applicationId, filename) => {
-    
-    dispatch(downloadApplicationReport(applicationId, filename)); 
+    dispatch(downloadApplicationReport(applicationId, filename));
   };
 
   if (allApplications.length === 0) {
@@ -264,7 +280,7 @@ const DemandeStageAdmin = () => {
           {Object.keys(filteredApplications).map((key, index) => (
             <Card className="my-4" border="secondary" key={index}>
               <Card.Header as="h3" eventkey={index.toString()}>
-                {key}
+                <span>{key}</span>
               </Card.Header>
               <Card.Body style={{ background: "#e4e4e4" }}>
                 {filteredApplications[key].map((application, innerIndex) => (

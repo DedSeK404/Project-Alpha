@@ -18,8 +18,10 @@ import { TbLogout2 } from "react-icons/tb";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { getAllNotifications } from "../../JS/actions/notificationactions";
 import NotificationPanelTeacher from "../Teacher/NotificationPanelTeacher";
+import { CgProfile } from "react-icons/cg";
 import { io } from "socket.io-client";
 import moment from "moment";
+import ProfileStudent_Teacher from "../Student/ProfileStudent_Teacher";
 
 const TeacherDashboard = () => {
   const currentUser = useSelector((state) => state.userR.currentUser);
@@ -216,7 +218,13 @@ const TeacherDashboard = () => {
               </Nav.Item>
               <hr />
               <Nav.Item>
-                <Nav.Link eventKey="tab5" onClick={handleLogout}>
+              <Nav.Item>
+                <Nav.Link eventKey="tab5">
+                <CgProfile size={30}/>
+                  <span> Profile</span>
+                </Nav.Link>
+              </Nav.Item>
+                <Nav.Link eventKey="tab6" onClick={handleLogout}>
                   <TbLogout2 size={30} />
                   <span> Log out</span>
                 </Nav.Link>
@@ -235,6 +243,7 @@ const TeacherDashboard = () => {
             {activeTab === "tab2" && <StagesActifsTeacher />}
             {activeTab === "tab3" && <RapportsTeacher />}
             {activeTab === "tab4" && <SoutenanceTeacher />}
+            {activeTab === "tab5" && <ProfileStudent_Teacher />}
           </div>
         </Col>
       </Row>

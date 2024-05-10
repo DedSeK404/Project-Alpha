@@ -9,8 +9,11 @@ const userSchema = new mongoose.Schema({
   img: {
     type: String,
     default:
-      "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
+      "https://cdn.vectorstock.com/i/500p/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.jpg",
   },
+  adress: { type: String },
+  birthDate: { type: Date },
+  phone: { type: String },
   role: {
     type: String,
     enum: ["teacher", "student"],

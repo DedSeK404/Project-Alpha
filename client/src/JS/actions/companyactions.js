@@ -126,7 +126,7 @@ export const addApplication =
       formData.append("teacher_id", newApplication.teacher_id);
       formData.append("student", newApplication.student);
       formData.append("file", newApplication.file);
-      console.log(formData.get("file"));
+  
 
       const config = {
         headers: {

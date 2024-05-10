@@ -26,8 +26,10 @@ import { BsBuildings } from "react-icons/bs";
 import { getAllNotifications } from "../../JS/actions/notificationactions";
 import NotificationPanelStudent from "../Student/NotificationPanelStudent";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
 import { io } from "socket.io-client";
 import moment from "moment";
+import ProfileStudent_Teacher from "../Student/ProfileStudent_Teacher";
 
 const StudentDashboard = () => {
   const currentUser = useSelector((state) => state.userR.currentUser);
@@ -245,7 +247,16 @@ const StudentDashboard = () => {
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="tab7" onClick={handleLogout}>
+              </Nav.Item>
+              <hr/>
+              <Nav.Item>
+                <Nav.Link eventKey="tab7">
+                <CgProfile size={30}/>
+                  <span> Profile</span>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>            
+                <Nav.Link eventKey="tab8" onClick={handleLogout}>
                   <TbLogout2 size={30} />
                   <span> Log out</span>
                 </Nav.Link>
@@ -267,6 +278,7 @@ const StudentDashboard = () => {
             {activeTab === "tab4" && <AjouterEntreprise />}
             {activeTab === "tab5" && <Rapports />}
             {activeTab === "tab6" && <SoutenanceStudent />}
+            {activeTab === "tab7" && <ProfileStudent_Teacher />}
           </div>
         </Col>
       </Row>

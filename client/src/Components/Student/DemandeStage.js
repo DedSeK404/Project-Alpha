@@ -111,7 +111,7 @@ const DemandeStage = () => {
       }
     }
   };
-
+ 
   return (
     <Container>
       <Card
@@ -267,9 +267,8 @@ const DemandeStage = () => {
                 <Table variant="light" striped bordered hover>
                   <thead>
                     <tr>
-                      <th>First Name</th>
-                      <th>Last Name</th>
                       <th>Company Name</th>
+                      <th>Student</th>
                       <th>Teacher</th>
                       <th>Start Date</th>
                       <th>End Date</th>
@@ -282,9 +281,11 @@ const DemandeStage = () => {
                       if (application.student === currentUser._id) {
                         return (
                           <tr key={index}>
-                            <td>{application.first_name}</td>
-                            <td>{application.last_name}</td>
                             <td>{application.companyName}</td>
+                            <td>
+                              {application.first_name} {application.last_name}
+                            </td>
+
                             <td>
                               {application.teacher_first_name}{" "}
                               {application.teacher_last_name}
@@ -311,7 +312,9 @@ const DemandeStage = () => {
                                     : "red",
                               }}
                             >
-                              {application.status}
+                              {application.status
+                                ? application.status
+                                : "pending"}
                             </td>
                           </tr>
                         );

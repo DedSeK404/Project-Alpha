@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -16,8 +17,8 @@ const io = new Server(server, {
 require("dotenv").config({ path: "./config/.env" });
 const PORT = process.env.PORT || 6000;
 
-app.use(cors());
-
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const connectToDB = require("./config/DataBase");
 app.use(express.json());
 connectToDB();
