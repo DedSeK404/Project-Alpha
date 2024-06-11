@@ -40,7 +40,7 @@ module.exports.createReport = async (req, res) => {
         existingReport.files = files;
         existingReport.rapport_status = rapport_status;
         await existingReport.save();
-        res.json({ msg: "Report updated", report: existingReport });
+        res.json({ msg: "Le rapport a été mis à jour.", report: existingReport });
       } else {
         // Create a new report
         const newRapport = new rapportModel({
@@ -52,7 +52,7 @@ module.exports.createReport = async (req, res) => {
           
         });
         await newRapport.save();
-        res.json({ msg: "Report successfully created", report: newRapport });
+        res.json({ msg: "Le rapport a été créé avec succès.", report: newRapport });
       }
     });
   } catch (error) {
@@ -65,18 +65,18 @@ module.exports.downloadReport = async (req, res) => {
     const { id, filename } = req.params;
     const report = await rapportModel.findById(id);
     if (!report) {
-      return res.status(404).json({ msg: "Report not found" });
+      return res.status(404).json({ msg: "Rapport introuvable." });
     }
 
     // Check if the report has files
     if (!report.files || report.files.length === 0) {
-      return res.status(404).json({ msg: "No files found for the report" });
+      return res.status(404).json({ msg: "Aucun fichier trouvé pour le rapport." });
     }
 
     // Find the file matching the provided filename
     const requestedFile = report.files.find(file => path.basename(file) === filename);
     if (!requestedFile) {
-      return res.status(404).json({ msg: "File not found" });
+      return res.status(404).json({ msg: "Fichier introuvable" });
     }
 
     // Construct the file path
@@ -84,7 +84,7 @@ module.exports.downloadReport = async (req, res) => {
 
     // Check if the file exists
     if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ msg: "File not found" });
+      return res.status(404).json({ msg: "Fichier introuvable" });
     }
 
     // Set appropriate headers for the file download
@@ -105,7 +105,7 @@ exports.getAllReports = async (req, res) => {
     const reports = await rapportModel.find();
     res.json(reports);
   } catch (error) {
-    res.status(500).json({ msg: "Internal server error" });
+    res.status(500).json({ msg: "Erreur interne du serveur" });
   }
 };
 
@@ -116,7 +116,7 @@ exports.updateReport = async (req, res) => {
 
     const existingReport = await rapportModel.findById(id);
     if (!existingReport) {
-      return res.status(404).json({ msg: "Report not found" });
+      return res.status(404).json({ msg: "Rapport introuvable" });
     }
 
     if (rapport_status !== undefined) {
@@ -134,7 +134,7 @@ exports.updateReport = async (req, res) => {
 
     await existingReport.save();
 
-    res.json({ msg: "Report updated successfully", report: existingReport });
+    res.json({ msg: "Le rapport a été mis à jour avec succès.", report: existingReport });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }

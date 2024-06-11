@@ -20,7 +20,7 @@ module.exports.addCompany = async (req, res) => {
   try {
     const company = new companyModel({ ...req.body });
     await company.save();
-    res.send({ msg: "company successfully added" });
+    res.send({ msg: "La société a été ajoutée avec succès." });
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -41,9 +41,9 @@ module.exports.deleteCompany = async (req, res) => {
   try {
     const company = await companyModel.findByIdAndDelete(companyID);
     if (!company) {
-      return res.status(404).send({ msg: "Company not found" });
+      return res.status(404).send({ msg: "Entreprise introuvable." });
     }
-    res.send({ msg: "Company deleted successfully" });
+    res.send({ msg: "La société a été supprimée avec succès." });
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -67,7 +67,7 @@ module.exports.addApplication = async (req, res) => {
 
       await application.save();
 
-      res.send({ msg: "Application successfully submitted" });
+      res.send({ msg: "Votre demande a été soumise avec succès." });
     });
   } catch (error) {
     res.status(500).send({ msg: error.message });
@@ -118,12 +118,12 @@ module.exports.downloadApplicationReport = async (req, res) => {
     const { id } = req.params;
     const application = await applicationModel.findById(id);
     if (!application) {
-      return res.status(404).json({ msg: "Application not found" });
+      return res.status(404).json({ msg: "Application introuvable" });
     }
     
     // Check if the application has a file
     if (!application.file) {
-      return res.status(404).json({ msg: "No file found for the application" });
+      return res.status(404).json({ msg: "Aucun fichier trouvé pour la demande." });
     }
 
     // Construct the file path
@@ -131,7 +131,7 @@ module.exports.downloadApplicationReport = async (req, res) => {
   
     // Check if the file exists
     if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ msg: "File not found" });
+      return res.status(404).json({ msg: "Fichier introuvable." });
     }
 
     // Set appropriate headers for the file download

@@ -21,8 +21,6 @@ import {
 import { FaRegCalendarAlt, FaDownload } from "react-icons/fa";
 import { updateNotification } from "../../JS/actions/notificationactions";
 
-import { getOneAccount } from "../../JS/actions/accountactions";
-
 const ApplicationDetails = ({
   application,
   handleAction,
@@ -46,18 +44,18 @@ const ApplicationDetails = ({
     <Accordion className="my-2">
       <Accordion.Item eventKey="0">
         <Accordion.Header>
-          Application created on{" "}
+        Application créé le{" "}
           {moment(application.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
         </Accordion.Header>
         <Accordion.Body>
           <Table variant="light" bordered striped responsive>
             <tbody>
               <tr>
-                <td>Company Name:</td>
+                <td>Nom de l'entreprise:</td>
                 <td>{application.companyName}</td>
               </tr>
               <tr>
-                <td>Teacher:</td>
+                <td>Enseignant:</td>
                 <td>
                   <span>
                     {application.teacher_first_name}{" "}
@@ -66,28 +64,28 @@ const ApplicationDetails = ({
                 </td>
               </tr>
               <tr>
-                <td>Start Date:</td>
+                <td>Date de début:</td>
                 <td>
                   <FaRegCalendarAlt />{" "}
                   {moment(application.startDate).format("MMMM Do YYYY")}
                 </td>
               </tr>
               <tr>
-                <td>End Date:</td>
+                <td>Date de fin:</td>
                 <td>
                   <FaRegCalendarAlt />{" "}
                   {moment(application.endDate).format("MMMM Do YYYY")}
                 </td>
               </tr>
               <tr>
-                <td>Status:</td>
+                <td>Statut:</td>
                 <td style={{ color: getStatusColor(application.status) }}>
                   {application.status}
                 </td>
               </tr>
               {application.file && (
                 <tr>
-                  <td>File:</td>
+                  <td>Fichier:</td>
                   <td>
                     <Button
                       variant="link"
@@ -95,7 +93,7 @@ const ApplicationDetails = ({
                         handleFileDownload(application._id, application.file)
                       }
                     >
-                      <FaDownload /> Download
+                      <FaDownload /> Telecharger
                     </Button>
                   </td>
                 </tr>
@@ -109,7 +107,7 @@ const ApplicationDetails = ({
           >
             <Button
               variant="primary"
-              onClick={() => handleAction(application._id, "approve")}
+              onClick={() => handleAction(application._id, "approve")} 
               disabled={
                 application.status === "approved" ||
                 allRapports.some(
@@ -119,7 +117,7 @@ const ApplicationDetails = ({
                 )
               }
             >
-              {application.status === "approved" ? "Approved" : "Approve"}
+              {application.status === "approved" ? "Approuvé" : "Approuver"}
             </Button>
 
             <Button
@@ -134,7 +132,7 @@ const ApplicationDetails = ({
                 )
               }
             >
-              {application.status === "declined" ? "Declined" : "Decline"}
+              {application.status === "declined" ? "Refusé" : "Refuser"}
             </Button>
           </ButtonGroup>
         </Accordion.Body>
@@ -247,7 +245,7 @@ const DemandeStageAdmin = () => {
     return (
       <Card>
         <Card.Body>
-          <Card.Text>There are no applications yet.</Card.Text>
+          <Card.Text>Il n'y a pas encore d'applications.</Card.Text>
         </Card.Body>
       </Card>
     );
@@ -265,13 +263,13 @@ const DemandeStageAdmin = () => {
           className="m-3"
           style={{ fontFamily: "monospace", fontWeight: "600" }}
         >
-          All Applications
+         Toutes les applications
         </Card.Text>
         <hr />
         <Card.Body>
           <InputGroup className="mb-3">
             <FormControl
-              placeholder="Search by student name"
+              placeholder="Rechercher par nom d'étudiant"
               aria-label="Search by student name"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -294,7 +292,7 @@ const DemandeStageAdmin = () => {
                 ))}
               </Card.Body>
               <Card.Footer className="text-muted text-center">
-                Number of applications: {filteredApplications[key].length}
+              Nombre d'applications: {filteredApplications[key].length}
               </Card.Footer>
             </Card>
           ))}
@@ -306,15 +304,15 @@ const DemandeStageAdmin = () => {
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to{" "}
-          {actionType === "approve" ? "approve" : "decline"} this application?
+        Êtes-vous sûr(e) de vouloir{" "}
+          {actionType === "approve" ? "approuver" : "décliner"} cette application ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleConfirmAction}>
-            Yes
+            Oui
           </Button>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancel
+            Annuler
           </Button>
         </Modal.Footer>
       </Modal>

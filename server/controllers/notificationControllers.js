@@ -32,7 +32,7 @@ module.exports.postNotification = async (req, res) => {
     // Save the notification to the database
     await notification.save();
 
-    res.status(201).send({ msg: "Notification posted successfully" });
+    res.status(201).send({ msg: "La notification a été publiée avec succès." });
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -75,7 +75,7 @@ module.exports.markNotificationAsRead = async (req, res) => {
     update[statusField] = "read";
     await NotificationModel.findByIdAndUpdate(notificationId, update);
 
-    res.status(200).send({ msg: "Notification marked as read" });
+    res.status(200).send({ msg: "Notification marquée comme lue." });
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }

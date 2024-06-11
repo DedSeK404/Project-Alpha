@@ -1,5 +1,5 @@
-const { body,  validationResult } = require("express-validator");
-const validator = require('validator');
+const { body, validationResult } = require("express-validator");
+const validator = require("validator");
 const customError = (errors) => errors.map((e) => ({ msg: e.msg }));
 
 module.exports.registerRules = [
@@ -7,26 +7,30 @@ module.exports.registerRules = [
     .notEmpty()
     .trim()
     .isLength({ min: 3 })
-    .withMessage("First name must be more than 3 characters"),
+    .withMessage("Le prénom doit contenir plus de 3 caractères."),
   body("last_name")
     .notEmpty()
     .trim()
     .isLength({ min: 3 })
-    .withMessage("Last name must be more than 3 characters"),
+    .withMessage("Le nom doit contenir plus de 3 caractères."),
   body("email")
     .isEmail()
     .normalizeEmail()
     .custom((value) => {
       if (!value.endsWith("@horizon-tech.tn")) {
-        throw new Error("Email must end with @horizon-tech.tn");
+        throw new Error(
+          "L'adresse e-mail doit se terminer par @horizon-tech.tn"
+        );
       }
       return true;
     })
     .trim()
-    .withMessage("Enter a valid email ending with @horizon-tech.tn"),
+    .withMessage(
+      "Saisissez une adresse e-mail valide se terminant par @horizon-tech.tn"
+    ),
   body("password")
     .isLength({ min: 8 })
-    .withMessage("Password cannot be less than 8 characters"),
+    .withMessage("Le mot de passe doit contenir au moins 8 caractères."),
 ];
 
 module.exports.loginRules = [
@@ -34,20 +38,24 @@ module.exports.loginRules = [
     .isEmail()
     .custom((value) => {
       if (!value.endsWith("@horizon-tech.tn")) {
-        throw new Error("Email must end with @horizon-tech.tn");
+        throw new Error(
+          "L'adresse e-mail doit se terminer par @horizon-tech.tn"
+        );
       }
       return true;
     })
-    .withMessage("Enter a valid email ending with @horizon-tech.tn"),
+    .withMessage(
+      "Saisissez une adresse e-mail valide se terminant par @horizon-tech.tn"
+    ),
   body("password")
     .isLength({ min: 8 })
-    .withMessage("Password cannot be less than 8 characters"),
+    .withMessage("Le mot de passe doit contenir au moins 8 caractères."),
 ];
 
 module.exports.createReportRules = [
   body().custom((value, { req }) => {
     if (!req.body) {
-      throw new Error("Request body cannot be empty");
+      throw new Error("Le corps de la requête ne peut pas être vide.");
     }
     return true;
   }),
@@ -57,13 +65,13 @@ module.exports.createCompany = [
   body("companyName")
     .notEmpty()
     .trim()
-    .withMessage("Please enter a company name"),
+    .withMessage("Veuillez saisir un nom d'entreprise."),
 ];
 
-module.exports.createApplication = [ 
+module.exports.createApplication = [
   body().custom((value, { req }) => {
     if (!req.body) {
-      throw new Error("Request body cannot be empty");
+      throw new Error("Le corps de la requête ne peut pas être vide.");
     }
     return true;
   }),
@@ -73,41 +81,40 @@ module.exports.updateProfileRules = [
   body("first_name")
     .trim()
     .isLength({ min: 3 })
-    .withMessage("First name must be more than 3 characters"),
+    .withMessage("Le prénom doit contenir plus de 3 caractères."),
   body("last_name")
     .trim()
     .isLength({ min: 3 })
-    .withMessage("Last name must be more than 3 characters"),
-    body("email")
-  .custom((value, { req }) => {
-    // Check if email is not an empty string
-    if (value.trim() !== "") {
-      // Apply email validation only if email is not empty
-      if (!value.endsWith("@horizon-tech.tn")) {
-        throw new Error("Email must end with @horizon-tech.tn");
+    .withMessage("Le nom doit contenir plus de 3 caractères."),
+  body("email")
+    .custom((value, { req }) => {
+      if (value.trim() !== "") {
+        if (!value.endsWith("@horizon-tech.tn")) {
+          throw new Error(
+            "L'adresse e-mail doit se terminer par @horizon-tech.tn"
+          );
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          throw new Error("Entrer une adress email valide");
+        }
       }
-      // Ensure the email format is valid
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value)) {
-        throw new Error("Enter a valid email address");
-      }
-    }
-    return true; // Allow empty email
-  })
-  .optional({ nullable: true, checkFalsy: true }) // Allow empty email
-  .normalizeEmail()
-  .trim()
-  .withMessage("Enter a valid email ending with @horizon-tech.tn"),
+      return true;
+    })
+    .optional({ nullable: true, checkFalsy: true })
+    .normalizeEmail()
+    .trim()
+    .withMessage(
+      "Saisissez une adresse e-mail valide se terminant par @horizon-tech.tn"
+    ),
   body("password").custom((value, { req }) => {
-    // Check if password is not an empty string or contains only whitespace
     if (value.trim() !== "") {
-      // Apply password validation only if password is not empty or contains only whitespace
       if (!validator.isLength(value, { min: 8 })) {
-        throw new Error("Password cannot be less than 8 characters");
+        throw new Error("Le mot de passe doit contenir au moins 8 caractères.");
       }
     }
-    return true; // Allow empty password
-  }), 
+    return true;
+  }),
 ];
 
 module.exports.validator = (req, res, next) => {

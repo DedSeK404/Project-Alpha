@@ -37,7 +37,7 @@ module.exports.updateUser = async (req, res) => {
   try {
     let user = await userModel.findById(userId);
     if (!user) {
-      return res.status(404).send({ msg: "User not found" });
+      return res.status(404).send({ msg: "Utilisateur introuvable." });
     }
 
     for (const key in updates) {
@@ -54,7 +54,7 @@ module.exports.updateUser = async (req, res) => {
 
     user.password = undefined;
 
-    res.send({ msg: "User updated successfully", user });
+    res.send({ msg: "L'utilisateur a été mis à jour avec succès.", user });
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -66,20 +66,20 @@ module.exports.uploadProfileImage = async (req, res) => {
   try {
     let user = await userModel.findById(userId);
     if (!user) {
-      return res.status(404).send({ msg: "User not found" });
+      return res.status(404).send({ msg: "Utilisateur introuvable" });
     }
 
     upload(req, res, async function (err) {
       try {
         if (err) {
-          console.error("Error uploading file:", err);
+          console.error("Une erreur est survenue pendant le chargement:", err);
           return res
             .status(400)
-            .send({ msg: "Error uploading file", error: err });
+            .send({ msg: "Une erreur est survenue pendant le chargement:", error: err });
         }
 
         if (!req.file) {
-          return res.status(400).send({ msg: "No file uploaded" });
+          return res.status(400).send({ msg: "Aucun fichier téléchargé." });
         }
 
         // Get the file path from req.file
@@ -89,7 +89,7 @@ module.exports.uploadProfileImage = async (req, res) => {
         user.img = filePath;
         await user.save();
 
-        res.send({ msg: "Profile image updated successfully", filePath });
+        res.send({ msg: "Votre photo de profil a été mise à jour avec succès.", filePath });
       } catch (error) {
         res.status(500).send({ msg: error.message });
       }

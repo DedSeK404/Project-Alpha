@@ -11,7 +11,7 @@ const SoutenanceStudent = () => {
   const allRapports = useSelector((state) => state.rapportR.reports);
   const currentUser = useSelector((state) => state.userR.currentUser);
   const account = useSelector((state) => state.accountR.account);
-
+ 
   const rapportsWithDateSoutenance = allRapports.filter(
     (report) =>
       report.rapport_status === "approved" &&
@@ -24,7 +24,7 @@ const SoutenanceStudent = () => {
     return (
       <Card>
         <Card.Body>
-          <Card.Text>There are no presentations yet.</Card.Text>
+          <Card.Text>Il n'y a pas encore de présentations.</Card.Text>
         </Card.Body>
       </Card>
     );
@@ -56,19 +56,19 @@ const SoutenanceStudent = () => {
         <Card.Title>{`${account.first_name} ${account.last_name}`}</Card.Title>
         <ListGroup>
           <ListGroup.Item variant="dark">
-            <strong>Email:</strong> {account.email}
+            <strong>E-mail:</strong> {account.email}
           </ListGroup.Item>
           <ListGroup.Item variant="dark">
-            <strong>Address:</strong> {account.adress}
+            <strong>Addresse:</strong> {account.adress}
           </ListGroup.Item>
           <ListGroup.Item variant="dark">
-            <strong>Phone:</strong> {account.phone}
+            <strong>Téléphone:</strong> {account.phone}
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>
       <Card.Footer>
         <small className="text-muted">
-          Created on: {new Date(account.created_on).toLocaleDateString()}
+          Créé le: {new Date(account.created_on).toLocaleDateString()}
         </small>
       </Card.Footer>
     </Card>
@@ -99,13 +99,13 @@ const SoutenanceStudent = () => {
             <Table variant="light" striped bordered hover>
               <thead>
                 <tr>
-                  <th>Company Name</th>
-                  <th>Student</th>
-                  <th>Teacher</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Rapport Status</th>
-                  <th>Date Soutenance</th>
+                  <th>Nom de l'entreprise</th>
+                  <th>Étudiant</th>
+                  <th>Enseignant</th>
+                  <th>Date de début</th>
+                  <th>Date de fin</th>
+                  <th>État du rapport</th>
+                  <th>Date de Soutenance</th>
                 </tr>
               </thead>
               <tbody>

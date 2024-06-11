@@ -48,7 +48,7 @@ const SignIn = () => {
                 <Form.Label style={{ color: "gray" }}>Email</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Entrez l'adresse e-mail"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -57,7 +57,7 @@ const SignIn = () => {
                   style={{ color: "gray" }}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter a valid email address.
+                  Veuillez entrer une adresse e-mail valide.
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -66,7 +66,7 @@ const SignIn = () => {
                 <div style={{ display: "flex", gap: "10px" }}>
                   <Form.Control
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder="Entrez le mot de passe"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
@@ -89,7 +89,7 @@ const SignIn = () => {
                 </div>
 
                 <Form.Control.Feedback type="invalid">
-                  Please enter a password.
+                  Veuillez entrer un mot de passe.
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -103,7 +103,7 @@ const SignIn = () => {
                 type="submit"
                 className="btn-block"
               >
-                Log In
+                Connection
               </Button>
             </Form>
           </div>

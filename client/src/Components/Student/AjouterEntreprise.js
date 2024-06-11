@@ -15,7 +15,7 @@ const AjouterEntreprise = () => {
   const handleCompanySubmit = (e) => {
     e.preventDefault();
     dispatch(addcompany(addCompany));
-    setAddCompany({ ...addCompany, companyName: "" }); // Reset company name
+    setAddCompany({ ...addCompany, companyName: "" }); 
   };
 
   const handleDelete = (companyId) => {
@@ -30,7 +30,7 @@ const AjouterEntreprise = () => {
           className="m-3"
           style={{ fontFamily: "monospace", fontWeight: "600" }}
         >
-          Add a Company
+          Ajouter une entreprise
         </Card.Text>
         <hr />
         <Card.Body>
@@ -39,10 +39,10 @@ const AjouterEntreprise = () => {
               {" "}
               <Form onSubmit={handleCompanySubmit}>
                 <Form.Group controlId="companyName">
-                  <Form.Label>Company Name</Form.Label>
+                  <Form.Label>Nom de l'entreprise</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter company name"
+                    placeholder="Entrez le nom de l'entreprise"
                     value={addCompany.companyName}
                     onChange={(e) =>
                       setAddCompany({
@@ -63,7 +63,7 @@ const AjouterEntreprise = () => {
                   variant="primary"
                   type="submit"
                 >
-                  Add Company
+                  Ajouter entreprise
                 </Button>
               </Form>
             </Card.Body>
@@ -77,7 +77,7 @@ const AjouterEntreprise = () => {
           className="m-3"
           style={{ fontFamily: "monospace", fontWeight: "600" }}
         >
-          Company List
+          Liste des entreprises 
         </Card.Text>
         <hr />
         <Card.Body>
@@ -85,7 +85,8 @@ const AjouterEntreprise = () => {
             .length === 0 ? (
             <Card>
               <Card.Body>
-                <Card.Text>There are no companies yet.</Card.Text>
+                <Card.Text>Il n'y a aucune entreprise pour le moment.
+</Card.Text>
               </Card.Body>
             </Card>
           ) : (
@@ -95,7 +96,7 @@ const AjouterEntreprise = () => {
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Company Name</th>
+                      <th>Nom de l'entreprise</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -112,7 +113,7 @@ const AjouterEntreprise = () => {
                               variant="danger"
                               onClick={() => handleDelete(company._id)}
                             >
-                              Delete
+                              Supprimer
                             </Button>
                           </td>
                         </tr>

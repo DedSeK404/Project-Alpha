@@ -57,64 +57,64 @@ const AccountModal = () => {
           <div>
             {!passwordsMatch && (
               <Alert variant="danger" className="mt-2">
-                Passwords do not match.
+                Les mots de passe ne correspondent pas.
               </Alert>
             )}
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Form.Group controlId="first_name">
-                <Form.Label>First Name</Form.Label>
+                <Form.Label>Prénom</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter first name"
+                  placeholder="Entez le prénom"
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter your first name.
+                  Veuillez entrer votre prénom.
                 </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="last_name">
-                <Form.Label>Last Name</Form.Label>
+                <Form.Label>Nom</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter last name"
+                  placeholder="Enter le nom"
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter your last name.
+                  Veuillez entrer votre nom.
                 </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="email">
-                <Form.Label>Email</Form.Label>
+                <Form.Label>E-mail</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Entrez votre adresse e-mail."
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter a valid email address.
+                  Veuillez entrer une adresse e-mail valide.
                 </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="password">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>Mot de passe</Form.Label>
                 <div
                   style={{ display: "flex", gap: "10px" }}
                   className="password-input"
                 >
                   <Form.Control
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder="Mot de passe"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
@@ -134,12 +134,12 @@ const AccountModal = () => {
                   </Button>
                 </div>
                 <Form.Control.Feedback type="invalid">
-                  Please enter a password.
+                  Veuillez entrer un mot de passe.
                 </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="confirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
+                <Form.Label>Confirmez le mot de passe.</Form.Label>
                 <div
                   style={{ display: "flex", gap: "10px" }}
                   className="password-input"
@@ -184,7 +184,7 @@ const AccountModal = () => {
                 type="submit"
                 className="btn-block"
               >
-                Create Account
+                Créer un compte
               </Button>
             </Form>
           </div>

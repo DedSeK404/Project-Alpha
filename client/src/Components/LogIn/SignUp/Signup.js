@@ -55,15 +55,15 @@ const Signup = () => {
           <div className="signup-form">
             {passwordsMatch === false && (
               <Alert variant="danger" className="text-center">
-                Passwords do not match.
+              Les mots de passe ne correspondent pas.
               </Alert>
             )}
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Form.Group controlId="first_name">
-                <Form.Label style={{ color: "gray" }}>First Name</Form.Label>
+                <Form.Label style={{ color: "gray" }}>Prénom</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter first name"
+                  placeholder="Entrez le prénom"
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
@@ -72,15 +72,15 @@ const Signup = () => {
                   style={{ color: "gray" }}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter your first name.
+                Veuillez entrer votre prénom.
                 </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="last_name">
-                <Form.Label style={{ color: "gray" }}>Last Name</Form.Label>
+                <Form.Label style={{ color: "gray" }}>Nom</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter last name"
+                  placeholder="Enter le Nom"
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
@@ -89,7 +89,7 @@ const Signup = () => {
                   style={{ color: "gray" }}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter your last name.
+                Veuillez entrer votre nom.
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -97,7 +97,7 @@ const Signup = () => {
                 <Form.Label style={{ color: "gray" }}>Email</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Entrez l'adresse e-mail"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -106,19 +106,19 @@ const Signup = () => {
                   style={{ color: "gray" }}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter a valid email address.
+                Veuillez entrer une adresse e-mail valide.
                 </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="password">
-                <Form.Label style={{ color: "gray" }}>Password</Form.Label>
+                <Form.Label style={{ color: "gray" }}>Mot de passe</Form.Label>
                 <div
                   style={{ display: "flex", gap: "10px" }}
                   className="password-input"
                 >
                   <Form.Control
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder="Entrez le mot de passe"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
@@ -140,19 +140,19 @@ const Signup = () => {
                   </Button>
                 </div>
                 <Form.Control.Feedback type="invalid">
-                  Please enter a password.
+                Veuillez entrer un mot de passe.
                 </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="confirmPassword">
-                <Form.Label style={{ color: "gray" }}>Confirm Password</Form.Label>
+                <Form.Label style={{ color: "gray" }}>Confirmer le mot de passe</Form.Label>
                 <div
                   style={{ display: "flex", gap: "10px" }}
                   className="password-input"
                 >
                   <Form.Control
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm Password"
+                    placeholder="Confirmer le mot de passe"
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
@@ -191,7 +191,7 @@ const Signup = () => {
                 type="submit"
                 className="btn-block"
               >
-                Sign Up
+                S'inscrire
               </Button>
             </Form>
           </div>

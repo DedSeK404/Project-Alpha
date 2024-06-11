@@ -160,7 +160,7 @@ const RapportsTeacher = () => {
         <Form.Group className="mb-4" controlId="searchQuery">
           <Form.Control
             type="text"
-            placeholder="Search by student name"
+            placeholder="Rechercher par nom d'étudiant"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -169,7 +169,7 @@ const RapportsTeacher = () => {
         {filteredRapports.length === 0 ? (
           <Card>
             <Card.Body>
-              <Card.Text>No rapports found.</Card.Text>
+              <Card.Text>Aucun rapport trouvé.</Card.Text>
             </Card.Body>
           </Card>
         ) : (
@@ -177,28 +177,28 @@ const RapportsTeacher = () => {
             <Card className="mb-4" key={report._id} style={{ width: "100%" }}>
               <Card.Body>
                 <Card.Title>
-                  Company Name {report.application?.companyName}
+                  Nom de l'entreprise: {report.application?.companyName}
                 </Card.Title>
               </Card.Body>
               <ListGroup className="list-group-flush">
                 <ListGroup.Item>
-                  Start Date: <FaRegCalendarAlt />{" "}
+                  Date de début: <FaRegCalendarAlt />{" "}
                   {moment(report.application?.startDate).format("YYYY-MM-DD")}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  End Date: <FaRegCalendarAlt />{" "}
+                  Date de fin: <FaRegCalendarAlt />{" "}
                   {moment(report.application?.endDate).format("YYYY-MM-DD")}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Teacher: {report.application?.teacher_first_name}{" "}
+                  Enseignant: {report.application?.teacher_first_name}{" "}
                   {report.application?.teacher_last_name}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Student: {report.application?.first_name}{" "}
+                Étudiant: {report.application?.first_name}{" "}
                   {report.application?.last_name}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Status:{" "}
+                  Statut:{" "}
                   <span
                     style={{
                       color:
@@ -216,13 +216,13 @@ const RapportsTeacher = () => {
                   <tbody>
                     {report.files.map((file, fileIndex) => (
                       <tr key={fileIndex}>
-                        <td>File {fileIndex + 1}</td>
+                        <td>Fichier {fileIndex + 1}</td>
                         <td>
                           <Button
                             variant="link"
                             onClick={() => handleFileDownload(report._id, file)}
                           >
-                            <FaDownload /> Download
+                            <FaDownload /> Telecharger
                           </Button>
                         </td>
                       </tr>
@@ -231,7 +231,7 @@ const RapportsTeacher = () => {
                 </Table>
                 <Accordion defaultActiveKey={null}>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>Comments</Accordion.Header>
+                    <Accordion.Header>Commentaires</Accordion.Header>
                     <Accordion.Body>
                       <ListGroup>
                         {report.message.slice(1).map((msg, index) => (
@@ -248,7 +248,7 @@ const RapportsTeacher = () => {
                   <Card bg="secondary" text="white" className="mt-3">
                     <Card.Body>
                       <Card.Text as={"h3"}>
-                        Stage completion confirmed, presentation date scheduled
+                      La fin du stage est confirmée, la date de présentation est fixée.
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -256,7 +256,7 @@ const RapportsTeacher = () => {
                   <>
                     {" "}
                     <Form.Group controlId={`message-${report._id}`}>
-                      <Form.Label>Leave a comment:</Form.Label>
+                      <Form.Label>Laisser un commentaire:</Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={3}
@@ -274,21 +274,22 @@ const RapportsTeacher = () => {
                         onClick={() => handleUpdateMessage(report._id, report)}
                         variant="secondary"
                       >
-                        Add Comment
+                        Écrire un commentaire
+
                       </Button>
                       <Button
                         onClick={() => handleApprove(report._id, report)}
                         variant="secondary"
                         disabled={report.rapport_status === "approved"}
                       >
-                        Approve
+                        Approver
                       </Button>
                       <Button
                         disabled={report.rapport_status === "revision"}
                         onClick={() => handleRevision(report._id, report)}
                         variant="secondary"
                       >
-                        Revision
+                        Révision 
                       </Button>
                     </ButtonGroup>
                   </>

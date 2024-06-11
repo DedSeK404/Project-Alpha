@@ -14,13 +14,12 @@ const StagesActifsTeacher = () => {
   const account = useSelector((state) => state.accountR.account);
 
   const approvedApplications = allApplications.filter((application) => {
-    // Check if all corresponding reports have a date_soutenance
+  
     const allRapportsHaveDateSoutenance = allRapports.some(
       (rapport) =>
         rapport.application._id === application._id && rapport.date_soutenance
     );
 
-    // Return true only if the application is approved and there's at least one corresponding approved report without a date_soutenance
     return (
       application.status === "approved" &&
       currentUser._id === application.teacher_id &&
@@ -63,19 +62,19 @@ const StagesActifsTeacher = () => {
         <Card.Title>{`${account.first_name} ${account.last_name}`}</Card.Title>
         <ListGroup>
           <ListGroup.Item variant="dark">
-            <strong>Email:</strong> {account.email}
+            <strong>E-mail:</strong> {account.email}
           </ListGroup.Item>
           <ListGroup.Item variant="dark">
-            <strong>Address:</strong> {account.adress}
+            <strong>Addresse:</strong> {account.adress}
           </ListGroup.Item>
           <ListGroup.Item variant="dark">
-            <strong>Phone:</strong> {account.phone}
+            <strong>Télephone:</strong> {account.phone}
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>
       <Card.Footer>
         <small className="text-muted">
-          Created on: {new Date(account.created_on).toLocaleDateString()}
+          Créé le: {new Date(account.created_on).toLocaleDateString()}
         </small>
       </Card.Footer>
     </Card>
@@ -105,11 +104,11 @@ const StagesActifsTeacher = () => {
             <Table variant="light" striped bordered hover>
               <thead>
                 <tr>
-                  <th>Company Name</th>
-                  <th>Student</th>
-                  <th>Teacher</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
+                  <th>Nom de l'entreprise</th>
+                  <th>Étudiant</th> 
+                  <th>Enseignant</th>
+                  <th>Date de début</th>
+                  <th>Date de fin</th>
                 </tr>
               </thead>
               <tbody>

@@ -59,7 +59,7 @@ const Rapports = () => {
       dispatch(updateNotification(notificationData));
       setSelectedFiles([]);
     } else {
-      alert("Please select one or more files to upload.");
+      alert("Veuillez sélectionner un ou plusieurs fichiers à importer.");
     }
   };
 
@@ -67,7 +67,7 @@ const Rapports = () => {
     return (
       <Card>
         <Card.Body>
-          <Card.Text>There are no reports yet.</Card.Text>
+          <Card.Text>Il n'y a pas encore de rapports.</Card.Text>
         </Card.Body>
       </Card>
     );
@@ -84,7 +84,7 @@ const Rapports = () => {
         className="m-3"
         style={{ fontFamily: "monospace", fontWeight: "600" }}
       >
-        Upload Reports
+        Gérer les rapports
       </Card.Text>
       <hr />
       <Card.Body>
@@ -96,21 +96,21 @@ const Rapports = () => {
               </Card.Body>
               <ListGroup className="list-group-flush">
                 <ListGroup.Item>
-                  Teacher: {application.teacher_first_name}{" "}
+                  Enseignant: {application.teacher_first_name}{" "}
                   {application.teacher_last_name}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Student: {application.first_name} {application.last_name}
+                  Étudiant: {application.first_name} {application.last_name}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Start Date: <FaRegCalendarAlt />{" "}
+                  Date de début: <FaRegCalendarAlt />{" "}
                   {moment(application.startDate).format("YYYY-MM-DD")}
                   <br />
-                  End Date: <FaRegCalendarAlt />{" "}
+                  Date de fin: <FaRegCalendarAlt />{" "}
                   {moment(application.endDate).format("YYYY-MM-DD")}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Status:{" "}
+                  Statut:{" "}
                   {
                     allRapports.find(
                       (report) => report.application._id === application._id
@@ -120,7 +120,7 @@ const Rapports = () => {
               </ListGroup>
               <Accordion className="mt-2 p-2" defaultActiveKey={0}>
                 <Accordion.Item eventKey="0">
-                  <Accordion.Header>Comments</Accordion.Header>
+                  <Accordion.Header>Commentaires</Accordion.Header>
                   <Accordion.Body>
                     <ListGroup>
                       {allRapports
@@ -144,7 +144,7 @@ const Rapports = () => {
                 )?.rapport_status === "approved" ? (
                   <Card bg="success" text="white">
                     <Card.Header as={"h3"}>
-                      This report has been approved by your teacher.
+                      Ce rapport a été approuvé par votre enseignant.
                     </Card.Header>
                   </Card>
                 ) : (
@@ -165,7 +165,7 @@ const Rapports = () => {
                       }}
                       onClick={() => handleSubmit(application)}
                     >
-                      Upload Files
+                      Importer un/des fichier(s)
                     </Button>
                   </>
                 )}

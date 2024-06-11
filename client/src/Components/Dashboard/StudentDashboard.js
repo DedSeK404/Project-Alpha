@@ -111,29 +111,29 @@ const StudentDashboard = () => {
           <Toast.Body>
             <strong style={{ color: "white" }}>
               {notificationData.sender === "admin"
-                ? "The admin"
+                ? "L'admin"
                 : notificationData.sender === "teacher_approve" ||
                   notificationData.sender === "teacher_decline" ||
                   notificationData.sender === "teacher_message"
-                ? "A teacher"
+                ? "Un/Une enseignant(e)"
                 : notificationData.sender === "admin_soutenance"
-                ? "The admin"
+                ? "L'admin"
                 : ""}
             </strong>
             <p style={{ color: "white" }}>
               {" "}
               {notificationData.applicationState === "approved"
-                ? "has approved an application"
+                ? "a approuvé une application"
                 : notificationData.applicationState === "declined"
-                ? "has declined an application"
+                ? "a refusé une application"
                 : notificationData.sender === "teacher_approve"
-                ? "Has approved a report"
+                ? "a approuvé un rapport"
                 : notificationData.sender === "teacher_decline"
-                ? "has submitted a report for revision"
+                ? "a soumis un rapport pour révision"
                 : notificationData.sender === "teacher_message"
-                ? "has left a message on a report"
+                ? "a laissé un commentaire sur un rapport"
                 : notificationData.sender === "admin_soutenance"
-                ? "has set a presentation date for an application"
+                ? "a fixé une date de présentation pour une application"
                 : ""}
             </p>
             <p
@@ -246,19 +246,18 @@ const StudentDashboard = () => {
                   <span> Soutenances</span>
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Item>
-              </Nav.Item>
-              <hr/>
+              <Nav.Item></Nav.Item>
+              <hr />
               <Nav.Item>
                 <Nav.Link eventKey="tab7">
-                <CgProfile size={30}/>
+                  <CgProfile size={30} />
                   <span> Profile</span>
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Item>            
+              <Nav.Item>
                 <Nav.Link eventKey="tab8" onClick={handleLogout}>
                   <TbLogout2 size={30} />
-                  <span> Log out</span>
+                  <span> Déconnexion </span>
                 </Nav.Link>
               </Nav.Item>
               {/* Add more tabs as needed */}

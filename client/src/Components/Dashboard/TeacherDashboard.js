@@ -74,7 +74,6 @@ const TeacherDashboard = () => {
 
     // Event listener for "newNotification" event from the server
     socket.on("newNotification", (data) => {
-    
       if (!data.toAdmin && data.teacher_id === currentUser._id) {
         setNotificationData(data);
         setShowToast(true);
@@ -100,23 +99,23 @@ const TeacherDashboard = () => {
           <Toast.Body>
             <strong style={{ color: "white" }}>
               {notificationData.sender === "admin"
-                ? "The admin"
+                ? "L'admin"
                 : notificationData.sender === "student report"
-                ? "A student"
+                ? "Un/Une étudiant(e)"
                 : notificationData.sender === "admin_soutenance"
-                ? "The admin"
+                ? "L'admin"
                 : ""}
             </strong>
             <p style={{ color: "white" }}>
               {" "}
               {notificationData.applicationState === "approved"
-                ? "has approved an application"
+                ? "a approuvé une application"
                 : notificationData.applicationState === "declined"
-                ? "has declined an application"
+                ? "a refusé une application"
                 : notificationData.sender === "student report"
-                ? "has updated a report"
+                ? "a révisé un rapport"
                 : notificationData.sender === "admin_soutenance"
-                ? "has set a presentation date for an application"
+                ? "a fixé une date de présentation pour une application"
                 : ""}
             </p>
             <p
@@ -140,7 +139,7 @@ const TeacherDashboard = () => {
           sm={3}
           className="bg-dark text-white sidebar"
           onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseLeave={handleMouseLeave} 
         >
           <div className="p-4">
             <div
@@ -218,15 +217,15 @@ const TeacherDashboard = () => {
               </Nav.Item>
               <hr />
               <Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="tab5">
-                <CgProfile size={30}/>
-                  <span> Profile</span>
-                </Nav.Link>
-              </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="tab5">
+                    <CgProfile size={30} />
+                    <span> Profile</span>
+                  </Nav.Link>
+                </Nav.Item>
                 <Nav.Link eventKey="tab6" onClick={handleLogout}>
                   <TbLogout2 size={30} />
-                  <span> Log out</span>
+                  <span> Déconnexion </span>
                 </Nav.Link>
               </Nav.Item>
             </Nav>

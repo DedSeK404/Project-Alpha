@@ -7,13 +7,13 @@ module.exports.Signup = async (req, res) => {
   try {
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.status(400).send({ msg: "user already exists" });
+      return res.status(400).send({ msg: "L'utilisateur existe déjà." });
     }
 
     const hashed = await hashPwd(password);
     const user = new userModel({ ...req.body, password: hashed });
     await user.save();
-    res.send({ msg: "user successfully created", user: user });
+    res.send({ msg: "L'utilisateur a été créé avec succès.", user: user });
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -25,7 +25,7 @@ module.exports.signin = async (req, res) => {
     const existingUser = await userModel.findOne({ email });
     if (!existingUser) {
       return res.status(400).send({
-        msg: "there is no account linked to this email, please make sure that you type the email correctly",
+        msg: "Aucun compte n'est associé à cet e-mail. Veuillez vérifier que vous l'avez saisi correctement.",
       });
     }
 
@@ -34,14 +34,14 @@ module.exports.signin = async (req, res) => {
     if (!match) {
       return res
         .status(400)
-        .send({ msg: "the password you entered is incorrect" });
+        .send({ msg: "Le mot de passe que vous avez saisi est incorrect." });
     }
     const payload = { userID: existingUser._id };
     const token = createtoken(payload);
     existingUser.password = undefined;
     res.send({
       token,
-      msg: "user succsessfully logged in",
+      msg: "Connexion réussie",
       user: existingUser,
     });
   } catch (error) {

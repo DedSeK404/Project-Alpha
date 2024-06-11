@@ -24,7 +24,6 @@ const RapportsAdmin = () => {
   };
 
   const handleRevision = (reportId, report) => {
-   
     const notificationData = {
       sender: "admin_soutenance",
       toAdmin: false,
@@ -56,8 +55,8 @@ const RapportsAdmin = () => {
         isEdited: true,
         student: report.student,
         timestamp: Date.now(),
-        toAdmin:false,
-        teacher_id:report.application.teacher_id
+        toAdmin: false,
+        teacher_id: report.application.teacher_id,
       })
     );
   };
@@ -66,7 +65,7 @@ const RapportsAdmin = () => {
     return (
       <Card>
         <Card.Body>
-          <Card.Text>There are no reports yet.</Card.Text>
+          <Card.Text>Il n'y a pas encore de rapports.</Card.Text>
         </Card.Body>
       </Card>
     );
@@ -98,27 +97,27 @@ const RapportsAdmin = () => {
                   </Card.Body>
                   <ListGroup className="list-group-flush">
                     <ListGroup.Item>
-                      Teacher: {report.application.teacher_first_name}{" "}
+                      Enseignant: {report.application.teacher_first_name}{" "}
                       {report.application.teacher_last_name}
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      Student: {report.application.first_name}{" "}
+                      Étudiant: {report.application.first_name}{" "}
                       {report.application.last_name}
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      Start Date: <FaRegCalendarAlt />{" "}
+                      Date de début: <FaRegCalendarAlt />{" "}
                       {moment(report.application.startDate).format(
                         "YYYY-MM-DD"
                       )}
                       <br />
-                      End Date: <FaRegCalendarAlt />{" "}
+                      Date de fin: <FaRegCalendarAlt />{" "}
                       {moment(report.application.endDate).format("YYYY-MM-DD")}
                     </ListGroup.Item>
                     <blockquote
                       style={{ padding: "10px" }}
                       className="blockquote mb-0"
                     >
-                      <p>Status:</p>
+                      <p>Statut:</p>
                       <footer
                         style={{ color: "green" }}
                         className="blockquote-footer"
@@ -131,7 +130,9 @@ const RapportsAdmin = () => {
               </Col>
               <Col key={report._id + 1}>
                 <Card style={{ height: "100%" }}>
-                  <Card.Header>Choose Date for Presentation</Card.Header>
+                  <Card.Header>
+                    Choisissez la date pour la présentation
+                  </Card.Header>
                   <Card.Body>
                     <DatePicker
                       selected={selectedDates[report._id] || null}
@@ -141,7 +142,7 @@ const RapportsAdmin = () => {
                     />
                     {report.date_soutenance && (
                       <h3>
-                        <span>Application date was set on:</span>{" "}
+                        <span>La date de l'application a été fixée le:</span>{" "}
                         {moment(report.date_soutenance).format("YYYY-MM-DD")}
                       </h3>
                     )}
@@ -157,7 +158,7 @@ const RapportsAdmin = () => {
                       variant="primary"
                       onClick={() => handleRevision(report._id, report)}
                     >
-                      Set Date
+                      Définir la date
                     </Button>
                   </Card.Footer>
                 </Card>

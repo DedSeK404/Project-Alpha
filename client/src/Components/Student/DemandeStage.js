@@ -19,7 +19,7 @@ const DemandeStage = () => {
     companyName: "",
     startDate: "",
     endDate: "",
-    student: currentUser._id || "",
+    student: currentUser._id || "", 
     teacher_first_name: "",
     teacher_last_name: "",
     teacher_address: "",
@@ -124,7 +124,7 @@ const DemandeStage = () => {
           className="m-3"
           style={{ fontFamily: "monospace", fontWeight: "600" }}
         >
-          Apply for Stage
+          Postuler pour un stage
         </Card.Text>
         <hr />
         <Card.Body>
@@ -132,17 +132,17 @@ const DemandeStage = () => {
             <Card.Body>
               <Form onSubmit={handleApplicationSubmit}>
                 <Form.Group controlId="companySelect">
-                  <Form.Label>Select Company</Form.Label>
+                  <Form.Label>Sélectionner une entreprise</Form.Label>
                   <Form.Control
                     as="select"
                     name="companyName"
                     value={formData.companyName}
                     onChange={handleChange}
                   >
-                    <option value="">Select a company</option>
+                    <option value="">Sélectionner une entreprise</option>
 
                     {allCompanies.length === 0 ? (
-                      <option value="">There are no companies yet</option>
+                      <option value="">Aucune entreprise n'a été ajoutée pour le moment </option>
                     ) : (
                       allCompanies
                         .filter(
@@ -157,7 +157,7 @@ const DemandeStage = () => {
                   </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="teacherSelect">
-                  <Form.Label>Select Teacher</Form.Label>
+                  <Form.Label>Sélectionner un/une enseignant(e)</Form.Label>
                   <Form.Control
                     as="select"
                     name="teacher_first_name"
@@ -172,7 +172,7 @@ const DemandeStage = () => {
                         {formData.teacher_last_name}
                       </option>
                     ) : (
-                      <option value="">Select a teacher</option>
+                      <option value="">Sélectionner un/une enseignant(e)</option>
                     )}
                     {allAccounts
                       .filter((account) => account.role === "teacher")
@@ -192,7 +192,7 @@ const DemandeStage = () => {
                 </Form.Group>
 
                 <Form.Group controlId="startDate">
-                  <Form.Label>Start Date</Form.Label>
+                  <Form.Label>Date de début</Form.Label>
                   <Form.Control
                     type="date"
                     name="startDate"
@@ -201,7 +201,7 @@ const DemandeStage = () => {
                   />
                 </Form.Group>
                 <Form.Group controlId="endDate">
-                  <Form.Label>End Date</Form.Label>
+                  <Form.Label>Date de fin</Form.Label>
                   <Form.Control
                     type="date"
                     name="endDate"
@@ -211,7 +211,7 @@ const DemandeStage = () => {
                 </Form.Group>
 
                 <Form.Group controlId="file">
-                  <Form.Label>Upload File</Form.Label>
+                  <Form.Label>Importer un fichier</Form.Label>
                   <Form.Control
                     type="file"
                     name="file"
@@ -231,7 +231,7 @@ const DemandeStage = () => {
                   variant="primary"
                   type="submit"
                 >
-                  Apply
+                  Postuler 
                 </Button>
               </Form>
             </Card.Body>
@@ -246,7 +246,7 @@ const DemandeStage = () => {
           style={{ fontFamily: "monospace", fontWeight: "600" }}
         >
           {" "}
-          All Applications
+          Liste de toutes les applications
         </Card.Text>
         <hr />
         <Card.Body>
@@ -259,7 +259,7 @@ const DemandeStage = () => {
                 <Card>
                   <Card.Body>
                     <Card.Text>
-                      You have not submitted any applications yet.
+                    Vous n'avez envoyé aucune demande pour le moment.
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -267,12 +267,12 @@ const DemandeStage = () => {
                 <Table variant="light" striped bordered hover>
                   <thead>
                     <tr>
-                      <th>Company Name</th>
-                      <th>Student</th>
-                      <th>Teacher</th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Status</th>
+                      <th>Nom de l'entreprise </th>
+                      <th>Étudiant</th>
+                      <th>Enseignant</th>
+                      <th>Date de début</th>
+                      <th>Date de fin</th>
+                      <th>Statut</th>
                     </tr>
                   </thead>
 

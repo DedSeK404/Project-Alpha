@@ -15,7 +15,7 @@ const AccountManagement = () => {
     return (
       <Card>
         <Card.Body>
-          <Card.Text>There are no teacher accounts yet.</Card.Text>
+          <Card.Text>Il n'y a pas encore de comptes d'enseignant.</Card.Text>
         </Card.Body>
       </Card>
     );
@@ -32,7 +32,7 @@ const AccountManagement = () => {
           className="m-3"
           style={{ fontFamily: "monospace", fontWeight: "600" }}
         >
-          Teachers
+          Enseignants
         </Card.Text>
         <hr />
         <Card.Body>
@@ -41,9 +41,9 @@ const AccountManagement = () => {
               <Table variant="light" striped bordered hover>
                 <thead>
                   <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>E-mail</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@ const AccountManagement = () => {
                 }}
                 onClick={handleShowModal}
               >
-                Add Teacher Account
+                Ajouter un compte enseignant
               </Button>
             </Card.Body>
           </Card>
@@ -86,7 +86,7 @@ const AccountManagement = () => {
               fontSize: "2rem",
             }}
           >
-            Add a teacher account
+            Ajouter un compte enseignant
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>

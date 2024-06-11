@@ -39,7 +39,6 @@ const AdminDashboard = () => {
 
     // Event listener for "newNotification" event from the server
     socket.on("newNotification", (data) => {
-   
       if (data.toAdmin === true) {
         setNotificationData(data);
         setShowToast(true);
@@ -90,7 +89,7 @@ const AdminDashboard = () => {
     dispatch(getAllNotifications());
     setShowToast(false);
   };
- 
+
   return (
     <Container style={{ background: "#3A3B3D" }} fluid>
       <div style={{ position: "fixed", top: "2%", right: "2%", zIndex: "2" }}>
@@ -101,13 +100,13 @@ const AdminDashboard = () => {
           <Toast.Body>
             <strong style={{ color: "white" }}>
               {notificationData.sender === "teacher_approve"
-                ? "A teacher"
+                ? "Un/Une enseignant(e)"
                 : notificationData.sender}
             </strong>
             <p style={{ color: "white" }}>
               {notificationData.sender === "teacher_approve"
-                ? "has approved an application's report"
-                : "has submitted an application"}
+                ? "a validé le rapport de l'application'"
+                : "a publié une nouvelle application"}
             </p>
             <p
               style={{
@@ -221,7 +220,7 @@ const AdminDashboard = () => {
               <hr />
               <Nav.Item>
                 <Nav.Link eventKey="tab7" onClick={handleLogout}>
-                  <TbLogout2 size={30} /> <span>Log out</span>
+                  <TbLogout2 size={30} /> <span>Déconnexion </span>
                 </Nav.Link>
               </Nav.Item>
             </Nav>

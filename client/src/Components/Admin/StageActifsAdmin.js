@@ -12,13 +12,11 @@ const StagesActifsAdmin = () => {
   const allReports = useSelector((state) => state.rapportR.reports);
   const account = useSelector((state) => state.accountR.account);
   const approvedApplications = allApplications.filter((application) => {
-    // Check if all corresponding reports have a date_soutenance
     const allReportsHaveDateSoutenance = allReports.some(
       (rapport) =>
         rapport.application._id === application._id && rapport.date_soutenance
     );
 
-    // Return true only if the application is approved and there's at least one corresponding report without a date_soutenance
     return application.status === "approved" && !allReportsHaveDateSoutenance;
   });
 
@@ -26,7 +24,7 @@ const StagesActifsAdmin = () => {
     return (
       <Card>
         <Card.Body>
-          <Card.Text>There are no active stages.</Card.Text>
+          <Card.Text>Aucun stage actif pour le moment.</Card.Text>
         </Card.Body>
       </Card>
     );
@@ -58,19 +56,19 @@ const StagesActifsAdmin = () => {
         <Card.Title>{`${account.first_name} ${account.last_name}`}</Card.Title>
         <ListGroup>
           <ListGroup.Item variant="dark">
-            <strong>Email:</strong> {account.email}
+            <strong>E-mail:</strong> {account.email}
           </ListGroup.Item>
           <ListGroup.Item variant="dark">
-            <strong>Address:</strong> {account.adress}
+            <strong>Addresse:</strong> {account.adress}
           </ListGroup.Item>
           <ListGroup.Item variant="dark">
-            <strong>Phone:</strong> {account.phone}
+            <strong>Téléphone:</strong> {account.phone}
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>
       <Card.Footer>
         <small className="text-muted">
-          Created on: {new Date(account.created_on).toLocaleDateString()}
+        Créé le: {new Date(account.created_on).toLocaleDateString()}
         </small>
       </Card.Footer>
     </Card>
@@ -98,19 +96,18 @@ const StagesActifsAdmin = () => {
         <Card>
           <Card.Body>
             {" "}
-            <Table variant="light" striped bordered hover>
+            <Table variant="light" striped bordered hover> 
               <thead>
                 <tr>
-                  <th>Company Name</th>
-                  <th>Student</th>
-
-                  <th>Teacher</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
+                  <th>Nom de l'entreprise</th>
+                  <th>Étudiant</th>
+                  <th>Enseignant</th>
+                  <th>Date de début</th>
+                  <th>Date de fin</th>
                 </tr>
               </thead>
               <tbody>
-                {approvedApplications.map((application, index) => ( 
+                {approvedApplications.map((application, index) => (
                   <tr key={index}>
                     <td>{application.companyName}</td>
                     <OverlayTrigger
@@ -119,7 +116,6 @@ const StagesActifsAdmin = () => {
                       overlay={renderTooltip}
                       onEnter={() => getAccount(application.student)}
                     >
-                      
                       <td>
                         <CgProfile
                           style={{ color: "#6A62FA", cursor: "pointer" }}

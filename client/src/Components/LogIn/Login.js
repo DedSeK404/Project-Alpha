@@ -63,16 +63,16 @@ const Login = () => {
                     minHeight: "85vh",
                   }}
                 >
-                  <h2 style={{ color: "white", fontWeight: "600" }}>Log In</h2>
+                  <h2 style={{ color: "white", fontWeight: "600" }}>Connection</h2>
                   <SignIn />
                   <p className="text-center mt-3" style={{ color: "white" }}>
-                    If you don't have an account, click here to {""}
+                  Si vous n'avez pas de compte, cliquez ici pour {""}
                     <span
                       className="highlight"
                       style={{ color: "#6A62FA", fontSize: "larger" }}
                       onClick={handleSignupClick}
                     >
-                      Create an account
+                      créer un compte
                     </span>
                   </p>
                 </div>
@@ -90,16 +90,16 @@ const Login = () => {
                     minHeight: "85vh",
                   }}
                 >
-                  <h2 style={{ color: "white", fontWeight: "600" }}>Sign Up</h2>
+                  <h2 style={{ color: "white", fontWeight: "600" }}>S'inscrire</h2>
                   <Signup />
                   <p style={{ color: "white" }}>
-                    If you already have an account, click here to {""}
+                  Si vous avez déjà un compte, cliquez ici pour vous {""}
                     <span
                       style={{ color: "#6A62FA", fontSize: "larger" }}
                       className="highlight"
                       onClick={handleLoginClick}
                     >
-                      Login
+                      connecter.
                     </span>
                   </p>
                 </div>

@@ -51,7 +51,7 @@ const ProfileStudent_Teacher = () => {
     e.preventDefault();
     // Check if passwords match before submitting
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      alert("Les mots de passe ne correspondent pas.");
       return;
     }
     dispatch(updateUser(formData));
@@ -149,31 +149,31 @@ const ProfileStudent_Teacher = () => {
                     variant="primary"
                     type="submit"
                   >
-                    Save Changes
+                    Enregistrer les modifications
                   </Button>
                 </Form>
               )}
 
               <hr />
               <div className="mb-4">
-                <h4 className="mb-4">Profile Information</h4>
+                <h4 className="mb-4">Détails du profil </h4>
 
                 <Card>
                   <Card.Body>
                     <p>
-                      <strong>Email:</strong>{" "}
+                      <strong>E-mail:</strong>{" "}
                       {currentUser.email
                         ? currentUser.email
-                        : "Please add an email"}
+                        : "Veuillez ajouter une adresse e-mail"}
                     </p>
                     <hr />
                     <p>
-                      <strong>Birth Date:</strong>{" "}
+                      <strong>Date de naissance:</strong>{" "}
                       {moment(currentUser.birthDate).format("MMMM Do YYYY") ? (
                         moment(currentUser.birthDate).format("MMMM Do YYYY")
                       ) : (
                         <span style={{ color: "gray", fontSize: "smaller" }}>
-                          Please add a birth date
+                          Veuillez ajouter votre date de naissance
                         </span>
                       )}
                     </p>{" "}
@@ -184,18 +184,18 @@ const ProfileStudent_Teacher = () => {
                         currentUser.adress
                       ) : (
                         <span style={{ color: "gray", fontSize: "smaller" }}>
-                          Please add an address
+                          Veuillez ajouter votre adresse
                         </span>
                       )}
                     </p>{" "}
                     <hr />
                     <p>
-                      <strong>Phone:</strong>{" "}
+                      <strong>Téléphone:</strong>{" "}
                       {currentUser.phone ? (
                         currentUser.phone
                       ) : (
                         <span style={{ color: "gray", fontSize: "smaller" }}>
-                          Please add a phone number
+                          Veuillez ajouter votre Téléphone
                         </span>
                       )}
                     </p>
@@ -206,7 +206,7 @@ const ProfileStudent_Teacher = () => {
                 <Form onSubmit={handleSubmit}>
                   <hr />
                   <Form.Group controlId="formFirstName">
-                    <Form.Label>First Name</Form.Label>
+                    <Form.Label>Prénom</Form.Label>
                     <Form.Control
                       type="text"
                       name="first_name"
@@ -215,7 +215,7 @@ const ProfileStudent_Teacher = () => {
                     />
                   </Form.Group>
                   <Form.Group controlId="formLastName">
-                    <Form.Label>Last Name</Form.Label>
+                    <Form.Label>Nom</Form.Label>
                     <Form.Control
                       type="text"
                       name="last_name"
@@ -224,7 +224,7 @@ const ProfileStudent_Teacher = () => {
                     />
                   </Form.Group>
                   <Form.Group controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>E-mail</Form.Label>
                     <Form.Control
                       type="email"
                       name="email"
@@ -233,7 +233,7 @@ const ProfileStudent_Teacher = () => {
                     />
                   </Form.Group>
                   <Form.Group controlId="formBirthDate">
-                    <Form.Label>Birth Date</Form.Label>
+                    <Form.Label>Date de naissance</Form.Label>
                     <Form.Control
                       type="date"
                       name="birthDate"
@@ -242,7 +242,7 @@ const ProfileStudent_Teacher = () => {
                     />
                   </Form.Group>
                   <Form.Group controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Mot de passe</Form.Label>
                     <div style={{ display: "flex", gap: "10px" }}>
                       <Form.Control
                         type={showPassword ? "text" : "password"}
@@ -267,7 +267,7 @@ const ProfileStudent_Teacher = () => {
                     </div>
                   </Form.Group>
                   <Form.Group controlId="formConfirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Label>Confirmer le mot de passe</Form.Label>
                     <div style={{ display: "flex", gap: "10px" }}>
                       <Form.Control
                         type={showConfirmPassword ? "text" : "password"}
@@ -294,12 +294,12 @@ const ProfileStudent_Teacher = () => {
                     </div>
                     <Form.Control.Feedback type="invalid">
                       {passwordsMatch
-                        ? "Passwords do not match."
-                        : "Please confirm your password."}
+                        ? "Les mots de passe ne correspondent pas."
+                        : "Veuillez confirmer votre mot de passe."}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formAddress">
-                    <Form.Label>Address</Form.Label>
+                    <Form.Label>Addresse</Form.Label>
                     <Form.Control
                       type="text"
                       name="adress"
@@ -308,7 +308,7 @@ const ProfileStudent_Teacher = () => {
                     />
                   </Form.Group>
                   <Form.Group controlId="formPhone">
-                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Label>Téléphone</Form.Label>
                     <Form.Control
                       type="tel"
                       name="phone"
@@ -327,7 +327,7 @@ const ProfileStudent_Teacher = () => {
                     variant="primary"
                     type="submit"
                   >
-                    Save Changes
+                    Enregistrer les modifications
                   </Button>
                 </Form>
               ) : (
@@ -341,7 +341,7 @@ const ProfileStudent_Teacher = () => {
                   variant="secondary"
                   onClick={() => setEditMode(true)}
                 >
-                  Edit Profile
+                  Modifier le profil
                 </Button>
               )}
             </Col>

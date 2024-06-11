@@ -34,16 +34,16 @@ const NotificationPanelTeacher = () => {
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Click on a notification to archive it.
+      Cliquez sur une notification pour l'archiver.
     </Tooltip>
   );
- 
+
   return (
     <>
       {notifications.length === 0 ? (
         <Card>
           <Card.Body>
-            <Card.Text>You currently have no notifications.</Card.Text>
+            <Card.Text>Vous n'avez actuellement aucune notification.</Card.Text>
           </Card.Body>
         </Card>
       ) : (
@@ -56,7 +56,7 @@ const NotificationPanelTeacher = () => {
                   className="m-3"
                   style={{ fontFamily: "monospace", fontWeight: "600" }}
                 >
-                  New Notifications
+                  Nouvelles notifications
                 </Card.Text>
                 <OverlayTrigger
                   placement="top-end"
@@ -64,11 +64,11 @@ const NotificationPanelTeacher = () => {
                   overlay={renderTooltip}
                 >
                   <div style={{ maxHeight: "90vh", overflowY: "auto" }}>
-                  {notifications.filter(
+                    {notifications.filter(
                       (notification) => notification.teacherStatus === "unread"
                     ).length === 0 && (
                       <Card>
-                        <Card.Header>No new notifications</Card.Header>
+                        <Card.Header>Aucune nouvelle notification</Card.Header>
                       </Card>
                     )}
                     {notifications
@@ -95,21 +95,21 @@ const NotificationPanelTeacher = () => {
                             <strong>
                               {notification.sender === "admin_approved" ||
                               notification.sender === "admin_declined"
-                                ? "The admin"
+                                ? "L'admin"
                                 : notification.sender === "student report"
-                                ? "A student"
+                                ? "Un/une etudiant(e)"
                                 : notification.sender === "admin_soutenance"
-                                ? "The admin"
+                                ? "L'admin"
                                 : ""}
                             </strong>{" "}
                             {notification.sender === "admin_approved"
-                              ? "Has approved this application"
+                              ? "a approuvé cette application"
                               : notification.sender === "admin_declined"
-                              ? "Has declined this application"
+                              ? "a refusé cette application"
                               : notification.sender === "student report"
-                              ? "has updated this report"
+                              ? "a révisé ce rapport"
                               : notification.sender === "admin_soutenance"
-                              ? "Has set a presentation date for this application"
+                              ? "a fixé une date de présentation pour cette application"
                               : ""}
                           </Alert.Heading>
 
@@ -167,25 +167,25 @@ const NotificationPanelTeacher = () => {
                         }
                       >
                         <Alert.Heading>
-                        <strong>
-                              {notification.sender === "admin_approved" ||
-                              notification.sender === "admin_declined"
-                                ? "The admin"
-                                : notification.sender === "student report"
-                                ? "A student"
-                                : notification.sender === "admin_soutenance"
-                                ? "The admin"
-                                : ""} 
-                            </strong>{" "}
-                            {notification.sender === "admin_approved"
-                              ? "Has approved this application"
-                              : notification.sender === "admin_declined"
-                              ? "Has declined this application"
+                          <strong>
+                            {notification.sender === "admin_approved" ||
+                            notification.sender === "admin_declined"
+                              ? "L'admin"
                               : notification.sender === "student report"
-                              ? "has updated this report"
+                              ? "Un/une etudiant(e)"
                               : notification.sender === "admin_soutenance"
-                              ? "Has set a presentation date for this application"
+                              ? "L'admin"
                               : ""}
+                          </strong>{" "}
+                          {notification.sender === "admin_approved"
+                            ? "a approuvé cette application"
+                            : notification.sender === "admin_declined"
+                            ? "a refusé cette application"
+                            : notification.sender === "student report"
+                            ? "a révisé ce rapport"
+                            : notification.sender === "admin_soutenance"
+                            ? "a fixé une date de présentation pour cette application"
+                            : ""}
                         </Alert.Heading>
 
                         <div

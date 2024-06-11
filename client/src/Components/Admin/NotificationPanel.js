@@ -30,7 +30,7 @@ const NotificationPanel = () => {
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Click on a notification to archive it.
+      Cliquez sur une notification pour l'archiver.
     </Tooltip>
   );
 
@@ -39,7 +39,7 @@ const NotificationPanel = () => {
       {notifications.length === 0 ? (
         <Card>
           <Card.Body>
-            <Card.Text>You currently have no notifications.</Card.Text>
+            <Card.Text>Vous n'avez actuellement aucune notification.</Card.Text>
           </Card.Body>
         </Card>
       ) : (
@@ -52,7 +52,7 @@ const NotificationPanel = () => {
                   className="m-3"
                   style={{ fontFamily: "monospace", fontWeight: "600" }}
                 >
-                  New Notifications
+                  Nouvelles notifications
                 </Card.Text>
                 <OverlayTrigger
                   placement="top-end"
@@ -64,7 +64,7 @@ const NotificationPanel = () => {
                       (notification) => notification.adminStatus === "unread"
                     ).length === 0 && (
                       <Card>
-                        <Card.Header>No new notifications</Card.Header>
+                        <Card.Header>Aucune nouvelle notification</Card.Header>
                       </Card>
                     )}
                     {notifications
@@ -82,12 +82,12 @@ const NotificationPanel = () => {
                           <Alert.Heading>
                             <strong>
                               {notification.sender === "teacher_approve"
-                                ? "A teacher"
+                                ? "Un enseignant"
                                 : notification.sender}
                             </strong>{" "}
                             {notification.sender === "teacher_approve"
-                              ? "has approved the report of this application"
-                              : "has posted a new application"}
+                              ? "a approuvé le rapport de cette application"
+                              : "a publié une nouvelle application"}
                           </Alert.Heading>
 
                           <div
@@ -118,7 +118,7 @@ const NotificationPanel = () => {
                   className="m-3"
                   style={{ fontFamily: "monospace", fontWeight: "600" }}
                 >
-                  Notification History
+                  Historique des notifications
                 </Card.Text>
 
                 <div style={{ maxHeight: "90vh", overflowY: "auto" }}>
@@ -137,12 +137,12 @@ const NotificationPanel = () => {
                         <Alert.Heading>
                           <strong>
                             {notification.sender === "teacher_approve"
-                              ? "A teacher"
+                              ? "Un enseignant"
                               : notification.sender}
                           </strong>{" "}
                           {notification.sender === "teacher_approve"
-                            ? "has approved the report of this application"
-                            : "has posted a new application"}
+                            ? "a approuvé le rapport de cette application"
+                            : "a publié une nouvelle application"}
                         </Alert.Heading>
 
                         <div
